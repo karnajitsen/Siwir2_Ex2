@@ -7,12 +7,13 @@ OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=waveguide
 COMMON=
 
-all: clean waveguide
+all: waveguide
 
 waveguide:
 	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
-	
+
 test: clean
+	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
 	./waveguide 0.01 0.01
 
 clean:

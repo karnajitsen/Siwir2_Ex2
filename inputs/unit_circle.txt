@@ -1040,7 +1040,7 @@
            1037     -0.312179    -0.0963285
            1038      0.359086     0.0899899
  1976 faces in the domain
- index of vertex 0 | index of vertex 1 | index of vertex 2 
+ index of vertex 0 | index of vertex 1 | index of vertex 2
               175           625           473
                75            76           318
               149           373           416
