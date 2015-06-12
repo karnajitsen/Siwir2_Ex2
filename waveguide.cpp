@@ -6,7 +6,8 @@
 #include <memory>
 #include <string>
 #include<malloc.h>
-#include "Colsamm.h"
+#include <map>
+#include "myColsamm\Source\Colsamm.h"
 
 typedef double Real;
 typedef int unint;
@@ -16,17 +17,19 @@ using namespace std;
 using namespace ::_COLSAMM_;
 
 struct node{
-      double xcord, ycord,value;
+	double xcord, ycord, value;
+	size_t vertno;
 	  bool boundary;
 };
 
 struct graph{
-     node *neighbours, center;
+	 
+     std::map<size_t,node> nodes;
      size_t length;
 };
 
-struct triangle{
-	node vertex[3];
+struct triang{
+	size_t vertex[3];
 };
 
 Real delta, eps;
@@ -34,7 +37,8 @@ Real delta, eps;
 graph* __restrict ugraphs = nullptr;
 node* __restrict knodes = nullptr;
 node* __restrict unodes = nullptr;
-triangle * __restrict tri = nullptr;
+triang * __restrict tri = nullptr;
+size_t novert, notriangle;
 
 inline double kxy2(const double x, const double y)
 {
@@ -42,8 +46,7 @@ inline double kxy2(const double x, const double y)
 }
 
 inline void init()
-{
-	size_t novert, notriangle;
+{	
 	string tmp;
 	ifstream ucircle;
 	Real a, b, c;
@@ -68,78 +71,40 @@ inline void init()
 		unodes[i].xcord = b;
 		unodes[i].ycord = c;
 		unodes[i].value = 0.0;
+		unodes[i].vertno = i;
 		if ((b*b + c*c) >= 1.0)  // Check for precision error ???
 			unodes[i].boundary = true;
 		else
 			unodes[i].boundary = false;
-		//unodes[i].length = 0;
 		
 		//cout << i << " " << nodes[i].xcord << " " << nodes[i].ycord << '\n';
 	}
 
 	getline(ucircle, tmp);
-	//getline(ucircle,tmp1);
-	//cout << tmp1 << '\n';
-
 	getline(ucircle, tmp);
-	//  cout << tmp1 << '\n';
-
+	
 	for (notriangle = 1; ucircle >> d && ucircle >> e && ucircle >> f; notriangle++)
 	{
-		node c1, c2, c3, c4, c5, c6;
-		c1.xcord = unodes[e].xcord;
-		c1.ycord = unodes[e].ycord;
-		c1.value = 0.0;
-		c2.xcord = unodes[f].xcord;
-		c2.ycord = unodes[f].ycord;
-		c2.value = 0.0;	
-		ugraphs[d].center = unodes[d];
-		ugraphs[d].length += 2;
-		cn = (node*)memalign(ALLIGNMENT, ugraphs[d].length*sizeof(node));
-		memcpy(cn, ugraphs[d].neighbours, (ugraphs[d].length - 2)*sizeof(node));
-		cn[length - 2] = c1;
-		cn[length - 1] = c2;
-		memcpy(ugraphs[d].neighbours, cn, (ugraphs[d].length)*sizeof(node));
-		free(cn);
-
-		c3.xcord = unodes[d].xcord;
-		c3.ycord = unodes[d].ycord;
-		c3.value = 0.0;
-		c4.xcord = unodes[f].xcord;
-		c4.ycord = unodes[f].ycord;
-		c4.value = 0.0;
-		ugraphs[e].center = unodes[e];
-		ugraphs[e].length += 2;
-		cn = (node*)memalign(ALLIGNMENT, ugraphs[e].length*sizeof(node));
-		memcpy(cn, ugraphs[e].neighbours, (ugraphs[e].length - 2)*sizeof(node));
-		cn[length - 2] = c3;
-		cn[length - 1] = c4;
-		memcpy(ugraphs[e].neighbours, cn, (ugraphs[e].length)*sizeof(node));
-		free(cn);
-
-		c3.xcord = unodes[d].xcord;
-		c3.ycord = unodes[d].ycord;
-		c3.value = 0.0;
-		c4.xcord = unodes[e].xcord;
-		c4.ycord = unodes[e].ycord;
-		c4.value = 0.0;
-		ugraphs[f].center = unodes[f];
-		ugraphs[f].length += 2;
-		cn = (node*)memalign(ALLIGNMENT, ugraphs[f].length*sizeof(node));
-		memcpy(cn, ugraphs[f].neighbours, (ugraphs[f].length - 2)*sizeof(node));
-		cn[length - 2] = c3;
-		cn[length - 1] = c4;
-		memcpy(ugraphs[f].neighbours, cn, (ugraphs[f].length)*sizeof(node));
-		free(cn);
+		
+		ugraphs[d].nodes.emplace(d, unodes[d]);
+		ugraphs[d].nodes.emplace(e, unodes[e]);
+		ugraphs[d].nodes.emplace(f, unodes[f]);
+		ugraphs[e].nodes.emplace(e, unodes[e]);
+		ugraphs[e].nodes.emplace(d, unodes[d]);
+		ugraphs[e].nodes.emplace(f, unodes[f]);
+		ugraphs[f].nodes.emplace(f, unodes[f]);
+		ugraphs[f].nodes.emplace(e, unodes[e]);
+		ugraphs[f].nodes.emplace(d, unodes[d]);
+		
 		//cout << d << " " << e << " " << f << '\n';
-		tri[notriangle].vertex[0] = unodes[d];
-		tri[notriangle].vertex[1] = unodes[e];
-		tri[notriangle].vertex[2] = unodes[f];
+		tri[notriangle].vertex[0] = d;
+		tri[notriangle].vertex[1] = e;
+		tri[notriangle].vertex[2] = f;
 	}
 
-	knodes = (childnode*)memalign(ALLIGNMENT, novert*sizeof(childnode));
+	knodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
 
-	for (size_t i; i < novert, i++)
+	for (size_t i; i < novert; i++)
 	{
 		knodes[i].xcord = unodes[i].xcord;
 		knodes[i].ycord = unodes[i].ycord;
@@ -149,6 +114,54 @@ inline void init()
 
 }
 
+inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vector<double>>& localstiff, std::vector<std::vector<double>>& localmass)
+{
+	ELEMENTS::Triangle my_element;
+	//std::vector< std::vector< double > > loc_stiff, loc_mass;
+	std::vector<double> corners(6, 0.0);
+	
+	corners[0] = ugraphs[a].nodes.at(a).xcord; 
+	corners[1] = ugraphs[a].nodes.at(a).ycord;
+	corners[2] = ugraphs[b].nodes.at(b).xcord;
+	corners[3] = ugraphs[b].nodes.at(b).ycord;
+	corners[4] = ugraphs[c].nodes.at(c).xcord;
+	corners[5] = ugraphs[c].nodes.at(c).ycord;
+	// pass the corners to the finite element
+	my_element(corners);
+
+	localstiff =
+		my_element.integrate(grad(v_()) * grad(w_()));
+
+	localmass =
+		my_element.integrate(grad(v_()) * grad(w_()));
+}
+
+inline void createGlobalMatrix()
+{
+	std::vector<std::vector<double>> localstiff, localmass;
+	size_t a, b, c;
+	for (size_t i = 0; i < notriangle; i++)
+	{
+		a = tri[notriangle].vertex[0];
+		b = tri[notriangle].vertex[1];
+		c = tri[notriangle].vertex[2];
+		
+		createLocalMatrix(a, b, c, localstiff, localmass);
+
+		ugraphs[a].nodes.at(a).value += localstiff[0][0];
+		ugraphs[a].nodes.at(b).value += localstiff[0][1];
+		ugraphs[a].nodes.at(c).value += localstiff[0][2];
+
+		ugraphs[b].nodes.at(a).value += localstiff[1][0];
+		ugraphs[b].nodes.at(b).value += localstiff[1][1];
+		ugraphs[b].nodes.at(c).value += localstiff[1][2];
+
+		ugraphs[c].nodes.at(a).value += localstiff[2][0];
+		ugraphs[c].nodes.at(b).value += localstiff[2][1];
+		ugraphs[c].nodes.at(c).value += localstiff[2][2];
+
+	}
+}
 
 
 int main(int argc, char** argv)
@@ -165,7 +178,7 @@ int main(int argc, char** argv)
 	eps = atof(argv[2]);
     	
 	init();
-    
+	createGlobalMatrix();
 
 	return 0;
 
