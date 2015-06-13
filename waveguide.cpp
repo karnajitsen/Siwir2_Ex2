@@ -169,7 +169,7 @@ inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vec
 	my_element(corners);
 
 	localstiff =
-		my_element.integrate(grad(v_()) * grad(w_())) - my_element.integrate(func<double>(kxy2) * v_() * w_());
+		my_element.integrate(grad(v_()) * grad(w_()) - func<double>(kxy2) * v_() * w_());// -my_element.integrate(func<double>(kxy2) * v_() * w_());
 
 	localmass =
 		my_element.integrate(v_() * w_());
@@ -233,7 +233,7 @@ inline void solveCG()
 
 	for (size_t i = 0; i < novert; i++)
 	{
-		for (rsize_t k = 0; k < ugraphs[i].nodes.size(); k++)
+		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
 			id = ugraphs[i].index[k];
 			temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
