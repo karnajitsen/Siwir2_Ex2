@@ -92,7 +92,7 @@ inline void init()
 
 	getline(ucircle, tmp);
 	getline(ucircle, tmp);
-	cout << "222" << '\n';
+	
 	for (notriangle = 1; ucircle >> d && ucircle >> e && ucircle >> f; notriangle++)
 	{
 		
@@ -141,7 +141,7 @@ inline void init()
 	}
 
 	knodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
-
+	cout << "222" << '\n';
 	for (size_t i; i < novert; i++)
 	{
 		knodes[i].xcord = unodes[i].xcord;
@@ -149,7 +149,7 @@ inline void init()
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
 		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
 	}
-
+	cout << "222" << '\n';
 
 }
 
@@ -355,9 +355,11 @@ int main(int argc, char** argv)
 	eps = atof(argv[2]);
     	
 	init();
+	cout << "222" << '\n';
 	createGlobalMatrix();
+	cout << "222" << '\n';
 	invPower(lambda);
-
+	cout << "222" << '\n';
 	cout << "\n Eigenvalue = " << lambda;
 	cout << "\n Writing solution to files... ";
 
