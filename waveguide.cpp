@@ -9,7 +9,7 @@
 #include<algorithm>
 #include<vector>
 #include <map>
-#include "myColsamm\Source\Colsamm.h"
+#include "./myColsamm/Source/Colsamm.h"
 
 #define ERRLIMIT 0.000000001
 
@@ -217,7 +217,7 @@ inline void populateFval()
 {
 	for (size_t i =0; i < novert; i++)
 	{
-		for (rsize_t k = 0; k < ugraphs[i].nodes.size; k++)
+		for (rsize_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
 			size_t id = ugraphs[i].index[k];
 			unodes[i].fval += ugraphs[i].nodes.at(id).massval * ugraphs[id].nodes.at(id).uval;
@@ -233,7 +233,7 @@ inline void solveCG()
 
 	for (size_t i = 0; i < novert; i++)
 	{
-		for (rsize_t k = 0; k < ugraphs[i].nodes.size; k++)
+		for (rsize_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
 			id = ugraphs[i].index[k];
 			temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
@@ -249,7 +249,7 @@ inline void solveCG()
 	{
 		for (size_t i = 0; i < novert; i++)
 		{
-			for (rsize_t k = 0; k < ugraphs[i].nodes.size; k++)
+			for (rsize_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
 				id = ugraphs[i].index[k];
 				z[i] += ugraphs[i].nodes.at(id).stiffval * dirc[id];
@@ -303,7 +303,7 @@ inline void invPower(Real& lambda)
 
 		for (size_t i = 0; i < novert; i++)
 		{
-			for (size_t k = 0; k < ugraphs[i].nodes.size; k++)
+			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
 				id = ugraphs[i].index[k];
 				num[i] += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
