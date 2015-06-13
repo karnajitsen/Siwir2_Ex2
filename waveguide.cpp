@@ -217,7 +217,7 @@ inline void populateFval()
 {
 	for (size_t i =0; i < novert; i++)
 	{
-		for (rsize_t k = 0; k < ugraphs[i].nodes.size(); k++)
+		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
 			size_t id = ugraphs[i].index[k];
 			unodes[i].fval += ugraphs[i].nodes.at(id).massval * ugraphs[id].nodes.at(id).uval;
@@ -241,7 +241,7 @@ inline void solveCG()
 		res[i] = unodes[i].fval - temp;
 	}
 
-	for (size_t i = 0; i < res.size; i++)
+	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
 
 	dirc = res;
@@ -249,14 +249,14 @@ inline void solveCG()
 	{
 		for (size_t i = 0; i < novert; i++)
 		{
-			for (rsize_t k = 0; k < ugraphs[i].nodes.size(); k++)
+			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
 				id = ugraphs[i].index[k];
 				z[i] += ugraphs[i].nodes.at(id).stiffval * dirc[id];
 			}
 		}
 
-	for (size_t i = 0; i < dirc.size; i++)
+	for (size_t i = 0; i < dirc.size(); i++)
 			denom += dirc[i] * z[i];
 
 	alpha = del0 / denom;
@@ -378,7 +378,7 @@ int main(int argc, char** argv)
 	size_t id;
 	for (size_t i = 0; i < novert; ++i)
 	{
-		for (size_t k = 0; k < ugraphs[i].nodes.size; k++)
+		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
 			id = ugraphs[i].index[k];
 			fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
