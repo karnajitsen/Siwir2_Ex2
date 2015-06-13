@@ -69,7 +69,7 @@ inline void init()
 	unodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
 
 	getline(ucircle, tmp);
-	cout << "222" << '\n';
+	
 	for (size_t i = 0; i<novert; i++)
 	{
 		ucircle >> a;
@@ -92,7 +92,7 @@ inline void init()
 
 	getline(ucircle, tmp);
 	getline(ucircle, tmp);
-	
+	cout << "222" << '\n';
 	for (notriangle = 1; ucircle >> d && ucircle >> e && ucircle >> f; notriangle++)
 	{
 		
