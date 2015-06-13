@@ -57,7 +57,7 @@ inline void init()
 	ifstream ucircle;
 	Real a, b, c;
 	size_t d, e, f;
-	node * cn;
+	//node * cn;
 
 	ucircle.open("./inputs/unit_circle.txt");
 	getline(ucircle, tmp);
@@ -336,7 +336,7 @@ inline bool compareFiles(string sfile, string tfile)
 			flag = false;
 	}
 
-	return true;
+	return flag;
 }
 
 int main(int argc, char** argv)
