@@ -63,12 +63,13 @@ inline void init()
 	getline(ucircle, tmp);
 
 	novert = stoi(tmp.substr(0, tmp.find(" ") - 1));
+	cout << "1111" << '\n';
 
 	ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph));
 	unodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
 
 	getline(ucircle, tmp);
-
+	cout << "222" << '\n';
 	for (size_t i = 0; i<novert; i++)
 	{
 		ucircle >> a;
