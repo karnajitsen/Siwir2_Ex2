@@ -260,7 +260,7 @@ inline void solveCG()
 			temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
 		}
 		cout << "@@@@@666" << '\n';
-		res[i] = unodes[i].fval - temp;
+		res.emplace_back(unodes[i].fval - temp);
 	}
 	
 	for (size_t i = 0; i < res.size(); i++)
@@ -274,8 +274,9 @@ inline void solveCG()
 			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
 				id = ugraphs[i].index[k];
-				z[i] += ugraphs[i].nodes.at(id).stiffval * dirc[id];
+				temp += ugraphs[i].nodes.at(id).stiffval * dirc[id];
 			}
+			z.emplace_back(temp);
 		}
 
 	for (size_t i = 0; i < dirc.size(); i++)
