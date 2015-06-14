@@ -93,7 +93,7 @@ inline void init()
 	getline(ucircle, tmp);
 	getline(ucircle, tmp);
 	
-	for (notriangle = 1; ucircle >> d && ucircle >> e && ucircle >> f; )
+	for (notriangle = 0; ucircle >> d && ucircle >> e && ucircle >> f; notriangle++)
 	{
 		
 		ugraphs[d].nodes.emplace(d, unodes[d]);
@@ -138,7 +138,7 @@ inline void init()
 		tri[notriangle].vertex[0] = d;
 		tri[notriangle].vertex[1] = e;
 		tri[notriangle].vertex[2] = f;
-		notriangle++;
+		
 	}
 
 	knodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
