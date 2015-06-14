@@ -434,9 +434,7 @@ int main(int argc, char** argv)
 	fOut4 << std::endl;
 
 	fOut4.close();
-	//free(unodes);
-	//free(knodes);
-	//free(ugraphs);
+	
 
 	string srcfile,tgtfile;
 	srcfile = "./reference-outputs/ksq-ref.txt";
@@ -471,6 +469,9 @@ int main(int argc, char** argv)
 	else
 		cout << "eigenmode.txt is not correct with reference file \n\n";
 	
+	free(unodes);
+	free(knodes);
+	free(ugraphs);
 	return 0;
 
 }
