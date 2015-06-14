@@ -91,11 +91,11 @@ inline void init()
 		//cout << i << " " << nodes[i].xcord << " " << nodes[i].ycord << '\n';
 	}
 
-	getline(ucircle, tmp);
-	cout << "***  " << tmp;
+	getline(ucircle, tmp);	
 	notriangle = 1976;
 	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
 	getline(ucircle, tmp);
+	cout << "***  " << tmp;
 	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
 		
