@@ -354,11 +354,19 @@ inline void solveCG()
 inline void invPower(Real& lambda)
 {
 	Real lambdaold = 0.0, normu = 0.0;
+	vector<Real> num, denom;
+	Real t1 = 0.0, t2 = 0.0;
+	size_t id = 0;
+	for (size_t i = 0; i < novert; i++)
+	{
+		num.emplace_back(0.0);
+		denom.emplace_back(0.0);
+	}
 	do{		
 		lambdaold = lambda;
 		populateFval();
 		solveCG();
-		cout << "555" << '\n';
+		//cout << "555" << '\n';
 		normu = 0.0;
 		for (size_t i = 0; i < novert; i++)
 		{
@@ -374,9 +382,7 @@ inline void invPower(Real& lambda)
 		} 
 		//cout << '\n';
 		
-		vector<Real> num, denom;
-		Real t1 = 0.0, t2 = 0.0;
-		size_t id = 0;
+		
 
 		for (size_t i = 0; i < novert; i++)
 		{
@@ -386,8 +392,9 @@ inline void invPower(Real& lambda)
 				t1 += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
 				t2 += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
 			}
-			num.emplace_back(t1);
-			denom.emplace_back(t2);
+			
+			num[i] = t1;
+			denom[i] = t2;
 			t1 = 0.0;
 			t2 = 0.0;
 		}
