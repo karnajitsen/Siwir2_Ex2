@@ -396,19 +396,19 @@ int main(int argc, char** argv)
 	invPower(lambda);
 	cout << "999" << '\n';
 	cout << "\n Eigenvalue = " << lambda;
+	//size_t id;
+	//for (size_t i = 0; i < novert; ++i)
+	//{
+	//	//cout << i;
+	//	for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
+	//	{
+	//		id = ugraphs[i].index[k];
+	//		fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
+	//		fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
+	//	}
+	//	//cout << '\n';
 
-	for (size_t i = 0; i < novert; ++i)
-	{
-		cout << i;
-		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
-		{
-			cout << " " << ugraphs[i].index[k];
-			//fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
-			//fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
-		}
-		cout << '\n';
-
-	}
+	//}
 	cout << "\n Writing solution to files... ";
 
 	std::string fname1 = std::string("ksq.txt");
