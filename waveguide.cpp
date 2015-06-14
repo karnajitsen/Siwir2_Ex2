@@ -247,25 +247,23 @@ inline void populateFval()
 inline void solveCG()
 {
 	vector<Real> res, dirc,z;
-	Real temp, del0, del1, denom, alpha, beta;
-	size_t id;
+	Real temp = 0.0, del0 = 0.0, del1 = 0.0, denom = 0.0, alpha = 0.0, beta = 0.0;
+	size_t id = 0;
 	cout << "555" << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
+
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			cout << "####666" << '\n';
 			id = ugraphs[i].index[k];
-			cout << "&&&&666" << '\n';
 			temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
 		}
-		cout << "@@@@@666" << '\n';
 		res.emplace_back(unodes[i].fval - temp);
+		temp = 0.0;
 	}
 	
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
-	cout << "777" << '\n';
 	dirc = res;
 	while (sqrt(del0) > eps)
 	{
@@ -277,6 +275,7 @@ inline void solveCG()
 				temp += ugraphs[i].nodes.at(id).stiffval * dirc[id];
 			}
 			z.emplace_back(temp);
+			temp = 0.0;
 		}
 
 	for (size_t i = 0; i < dirc.size(); i++)
@@ -306,37 +305,42 @@ inline void solveCG()
 
 inline void invPower(Real& lambda)
 {
-	Real lambdaold, normu = 0.0;
+	Real lambdaold = 0.0, normu = 0.0;
 	do{
-		cout << "333" << '\n';
+		
 		lambdaold = lambda;
 		populateFval();
-		cout << "444" << '\n';
 		solveCG();
 		cout << "555" << '\n';
 		for (size_t i = 0; i < novert; i++)
 		{
 			normu += unodes[i].uval * unodes[i].uval;
 		}
+		
 		normu = sqrt(normu);
 		for (size_t i = 0; i < novert; i++)
 		{
 			unodes[i].uval /= normu;
 		}
-
+		
 		vector<Real> num, denom;
-		size_t id;
+		Real t1 = 0.0, t2 = 0.0;
+		size_t id = 0;
 
 		for (size_t i = 0; i < novert; i++)
 		{
 			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
 				id = ugraphs[i].index[k];
-				num[i] += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
-				denom[i] += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
+				t1 += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
+				t2 += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
 			}
+			num.emplace_back(t1);
+			denom.emplace_back(t2);
+			t1 = 0.0;
+			t2 = 0.0;
 		}
-		Real n, d;
+		Real n = 0.0, d = 0.0;
 		for (size_t i = 0; i < novert; i++)
 		{
 			n += unodes[i].uval * num[i];
