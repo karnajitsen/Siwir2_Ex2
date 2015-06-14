@@ -63,7 +63,7 @@ inline void init()
 	getline(ucircle, tmp);
 
 	novert = stoi(tmp.substr(0, tmp.find(" ") - 1));
-	cout << "1111" << '\n';
+	cout << "no of vertex = " << novert << '\n';
 
 	ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph));
 	unodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
@@ -97,14 +97,17 @@ inline void init()
 	
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
 	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
+	cout << "no of triangle = " << notriangle << '\n';
 	getline(ucircle, tmp);
 	
 	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
 		cout << "6666666"<< '\n';
+		cout << "2 " << d << " " << e << " " << f << '\n';
 		ugraphs[d].nodes.emplace(d, unodes[d]);
 		ugraphs[d].nodes.emplace(e, unodes[e]);
 		ugraphs[d].nodes.emplace(f, unodes[f]);
+		cout << "77777" << '\n';
 		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), d) != ugraphs[d].index.end())
 					ugraphs[d].index.emplace_back(d);
 		
