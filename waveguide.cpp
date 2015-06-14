@@ -104,10 +104,11 @@ inline void init()
 	{
 		cout << "6666666"<< '\n';
 		cout << "2 " << d << " " << e << " " << f << '\n';
-		cout << ugraphs[d].length;
-		ugraphs[d].nodes.emplace(d, unodes[d]);
+		cout << "eee" << unodes[0].fval;
+		ugraphs[d].nodes.emplace(d, unodes[0])
+		/*ugraphs[d].nodes.emplace(d, unodes[d]);
 		ugraphs[d].nodes.emplace(e, unodes[e]);
-		ugraphs[d].nodes.emplace(f, unodes[f]);
+		ugraphs[d].nodes.emplace(f, unodes[f]);*/
 		cout << "77777" << '\n';
 		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), d) != ugraphs[d].index.end())
 					ugraphs[d].index.emplace_back(d);
