@@ -325,12 +325,13 @@ inline void solveCG()
 		res[i] -= alpha * z[i];
 		del1 += res[i] * res[i];
 	}
-	//for (size_t i = 0; i < novert; i++)
-	//{
-	//	//unodes[i].uval /= normu;
-	//	cout << unodes[i].uval << " ";
-	//}
-	
+	cout << "\n uval = ";
+	for (size_t i = 0; i < 10; i++)
+	{
+		//unodes[i].uval /= normu;
+		cout << unodes[i].uval << " ";
+	}
+	cout << '\n';
 	//cout << "delta = " << del1 << " " << del0;
 	
 	if (sqrt(del1) <= eps)
