@@ -366,7 +366,7 @@ inline void invPower(Real& lambda)
 		}
 		
 		normu = sqrt(normu);
-		cout << normu;
+		//cout << normu;
 		for (size_t i = 0; i < novert; i++)
 		{
 			unodes[i].uval /= normu;
@@ -400,7 +400,7 @@ inline void invPower(Real& lambda)
 
 		lambda = n / d;	
 		cout << " " << lambda << " ";
-	} while ((abs(lambda - lambdaold)/lambda) > ERRLIMIT);
+	} while ((abs(lambda - lambdaold)/lambdaold) > ERRLIMIT);
 }
 
 inline bool compareFiles(string sfile, string tfile)
