@@ -108,8 +108,9 @@ inline void init()
 		cout << "2 " << d << " " << e << " " << f << '\n';
 		//node nd;
 		cout << "eee";
+		ugraphs[d].length = 2;
 		//ugraphs[d].nodes.emplace(d, nd);
-		ugraphs[d].nodes.insert(std::pair<size_t,node>(d, unodes[d]));
+		//ugraphs[d].nodes.insert(std::pair<size_t,node>(d, unodes[d]));
 		//ugraphs[d].nodes.emplace(e, unodes[e]);
 		//ugraphs[d].nodes.emplace(f, unodes[f]);
 		cout << "77777" << '\n';
