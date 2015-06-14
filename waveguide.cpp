@@ -258,19 +258,19 @@ inline void solveCG()
 	cout << "555" << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
-
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
 			id = ugraphs[i].index[k];
 			temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
 		}
 		res.emplace_back(unodes[i].fval - temp);
+		dirc.emplace_back(unodes[i].fval - temp);
 		temp = 0.0;
 	}
 	
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
-	dirc = res;
+	//dirc = res;
 	while (sqrt(del0) > eps)
 	{
 		for (size_t i = 0; i < novert; i++)
@@ -284,6 +284,7 @@ inline void solveCG()
 			temp = 0.0;
 		}
 
+		denom = 0.0;
 	for (size_t i = 0; i < dirc.size(); i++)
 			denom += dirc[i] * z[i];
 
