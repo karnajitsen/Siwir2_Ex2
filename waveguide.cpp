@@ -465,6 +465,28 @@ inline bool compareFiles(string sfile, string tfile)
 	return flag;
 }
 
+inline bool compareEigenFiles(string sfile, string tfile)
+{
+	string sline, tline;
+	bool flag = true;
+	ifstream srcfile, tgtfile;
+	Real a, b, c, g, e, f;
+
+	srcfile.open(sfile);
+	tgtfile.open(tfile);
+
+	while (srcfile >> a && srcfile >> b && srcfile >> c && tgtfile >> g && tgtfile >> e && tgtfile >> f)
+	{
+		c = round(c * 10000);
+		f = round(f * 10000);
+		cout << c << " " << f << '\n';
+		if (a!=g || b != e || c!=f)
+			flag = false;
+	}
+
+	return flag;
+}
+
 int main(int argc, char** argv)
 {
 
@@ -559,7 +581,7 @@ int main(int argc, char** argv)
 	srcfile = "./reference-outputs/eigenmode-ref.txt";
 	tgtfile = "./eigenmode.txt";
 
-	if (compareFiles(srcfile, tgtfile))
+	if (compareEigenFiles(srcfile, tgtfile))
 		cout << "eigenmode.txt is correct with reference file \n\n";
 	else
 		cout << "eigenmode.txt is not correct with reference file \n\n";
