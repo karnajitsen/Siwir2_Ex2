@@ -39,7 +39,7 @@ struct triang{
 
 Real delta, eps;
 
-graph** __restrict ugraphs = nullptr;
+graph* __restrict ugraphs = nullptr;
 node* __restrict knodes = nullptr;
 node* __restrict unodes = nullptr;
 //node* __restrict fnodes = nullptr;
@@ -98,7 +98,8 @@ inline void init()
 	getline(ucircle, tmp);
 	
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
-	ugraphs = (graph**)memalign(ALLIGNMENT, novert*sizeof(graph*));
+	//ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph));
+	ugraphs = new graph[novert];
 	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
 	cout << "no of triangle = " << notriangle << '\n';
 	getline(ucircle, tmp);
@@ -111,44 +112,45 @@ inline void init()
 		cout << "eee";
 		//unodes[d].fval = 2;
 		//ugraphs[d].nodes.emplace(d, nd);
-		(*ugraphs[d]).nodes.insert(std::pair<size_t,node>(d, unodes[d]));
+
+		ugraphs[d].nodes.insert(std::pair<size_t,node>(d, unodes[d]));
 		//ugraphs[d].nodes.emplace(e, unodes[e]);
 		//ugraphs[d].nodes.emplace(f, unodes[f]);
 		cout << "77777" << '\n';
-		if (std::find((*ugraphs[d]).index.begin(), (*ugraphs[d]).index.end(), d) != (*ugraphs[d]).index.end())
-			(*ugraphs[d]).index.emplace_back(d);
+		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), d) != ugraphs[d].index.end())
+					ugraphs[d].index.emplace_back(d);
 		
-		if (std::find((*ugraphs[d]).index.begin(), (*ugraphs[d]).index.end(), e) != (*ugraphs[d]).index.end())
-			(*ugraphs[d]).index.emplace_back(e);
+		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), e) != ugraphs[d].index.end())
+					ugraphs[d].index.emplace_back(e);
 		
-		if (std::find((*ugraphs[d]).index.begin(), (*ugraphs[d]).index.end(), f) != (*ugraphs[d]).index.end())
-			(*ugraphs[d]).index.emplace_back(f);
+		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), f) != ugraphs[d].index.end())
+					ugraphs[d].index.emplace_back(f);
 		
-		(*ugraphs[e]).nodes.emplace(e, unodes[e]);
-		(*ugraphs[e]).nodes.emplace(d, unodes[d]);
-		(*ugraphs[e]).nodes.emplace(f, unodes[f]);
+		ugraphs[e].nodes.emplace(e, unodes[e]);
+		ugraphs[e].nodes.emplace(d, unodes[d]);
+		ugraphs[e].nodes.emplace(f, unodes[f]);
 
-		if (std::find((*ugraphs[e]).index.begin(), (*ugraphs[e]).index.end(), e) != (*ugraphs[e]).index.end())
-			(*ugraphs[e]).index.emplace_back(e);
+		if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), e) != ugraphs[e].index.end())
+			ugraphs[e].index.emplace_back(e);
 
-		if (std::find((*ugraphs[e]).index.begin(), (*ugraphs[e]).index.end(), d) != (*ugraphs[e]).index.end())
-			(*ugraphs[e]).index.emplace_back(d);
+		if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), d) != ugraphs[e].index.end())
+			ugraphs[e].index.emplace_back(d);		
 
-		if (std::find((*ugraphs[e]).index.begin(), (*ugraphs[e]).index.end(), f) != (*ugraphs[e]).index.end())
-			(*ugraphs[e]).index.emplace_back(f);
+		if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), f) != ugraphs[e].index.end())
+			ugraphs[e].index.emplace_back(f);
 
-		(*ugraphs[f]).nodes.emplace(f, unodes[f]);
-		(*ugraphs[f]).nodes.emplace(e, unodes[e]);
-		(*ugraphs[f]).nodes.emplace(d, unodes[d]);
+		ugraphs[f].nodes.emplace(f, unodes[f]);
+		ugraphs[f].nodes.emplace(e, unodes[e]);
+		ugraphs[f].nodes.emplace(d, unodes[d]);
 
-		if (std::find((*ugraphs[f]).index.begin(), (*ugraphs[f]).index.end(), f) != (*ugraphs[f]).index.end())
-			(*ugraphs[f]).index.emplace_back(f);
+		if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), f) != ugraphs[f].index.end())
+			ugraphs[f].index.emplace_back(f);
 
-		if (std::find((*ugraphs[f]).index.begin(), (*ugraphs[f]).index.end(), d) != (*ugraphs[f]).index.end())
-			(*ugraphs[f]).index.emplace_back(d);
+		if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), d) != ugraphs[f].index.end())
+			ugraphs[f].index.emplace_back(d);
 
-		if (std::find((*ugraphs[f]).index.begin(), (*ugraphs[f]).index.end(), e) != (*ugraphs[f]).index.end())
-			(*ugraphs[f]).index.emplace_back(e);
+		if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), e) != ugraphs[f].index.end())
+			ugraphs[f].index.emplace_back(e);	
 		
 		//cout << d << " " << e << " " << f << '\n';
 		tri[i].vertex[0] = d;
@@ -164,7 +166,7 @@ inline void init()
 		knodes[i].xcord = unodes[i].xcord;
 		knodes[i].ycord = unodes[i].ycord;
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
-		std::sort((*ugraphs[i]).index.begin(), (*ugraphs[i]).index.end());
+		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
 	}
 	cout << "222" << '\n';
 
@@ -177,14 +179,14 @@ inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vec
 	//std::vector< std::vector< double > > loc_stiff, loc_mass;
 	std::vector<double> corners(6, 0.0);
 	cout << "1 " << " " << b << " " << c << '\n';
-	corners[0] = (*ugraphs[a]).nodes.at(a).xcord;
-	corners[1] = (*ugraphs[a]).nodes.at(a).ycord;
+	corners[0] = ugraphs[a].nodes.at(a).xcord; 
+	corners[1] = ugraphs[a].nodes.at(a).ycord;
 	cout << "2 " << a << " " << b << " " << c << '\n';
-	corners[2] = (*ugraphs[b]).nodes.at(b).xcord;
-	corners[3] = (*ugraphs[b]).nodes.at(b).ycord;
+	corners[2] = ugraphs[b].nodes.at(b).xcord;
+	corners[3] = ugraphs[b].nodes.at(b).ycord;
 	cout << "3 " <<  a << " " << b << " " << c << '\n';
-	corners[4] = (*ugraphs[c]).nodes.at(c).xcord;
-	corners[5] = (*ugraphs[c]).nodes.at(c).ycord;
+	corners[4] = ugraphs[c].nodes.at(c).xcord;
+	corners[5] = ugraphs[c].nodes.at(c).ycord;
 	// pass the corners to the finite element
 	cout << a << " " << b << " " << c << '\n';
 	my_element(corners);
@@ -210,29 +212,29 @@ inline void createGlobalMatrix()
 		cout << "1 " << " " << b << " " << c << '\n';
 		createLocalMatrix(a, b, c, localstiff, localmass);
 		cout << "555" << '\n';
-		(*ugraphs[a]).nodes.at(a).stiffval += localstiff[0][0];
-		(*ugraphs[a]).nodes.at(b).stiffval += localstiff[0][1];
-		(*ugraphs[a]).nodes.at(c).stiffval += localstiff[0][2];
+		ugraphs[a].nodes.at(a).stiffval += localstiff[0][0];
+		ugraphs[a].nodes.at(b).stiffval += localstiff[0][1];
+		ugraphs[a].nodes.at(c).stiffval += localstiff[0][2];
 
-		(*ugraphs[b]).nodes.at(a).stiffval += localstiff[1][0];
-		(*ugraphs[b]).nodes.at(b).stiffval += localstiff[1][1];
-		(*ugraphs[b]).nodes.at(c).stiffval += localstiff[1][2];
+		ugraphs[b].nodes.at(a).stiffval += localstiff[1][0];
+		ugraphs[b].nodes.at(b).stiffval += localstiff[1][1];
+		ugraphs[b].nodes.at(c).stiffval += localstiff[1][2];
 
-		(*ugraphs[c]).nodes.at(a).stiffval += localstiff[2][0];
-		(*ugraphs[c]).nodes.at(b).stiffval += localstiff[2][1];
-		(*ugraphs[c]).nodes.at(c).stiffval += localstiff[2][2];
+		ugraphs[c].nodes.at(a).stiffval += localstiff[2][0];
+		ugraphs[c].nodes.at(b).stiffval += localstiff[2][1];
+		ugraphs[c].nodes.at(c).stiffval += localstiff[2][2];
 
-		(*ugraphs[a]).nodes.at(a).massval += localmass[0][0];
-		(*ugraphs[a]).nodes.at(b).massval += localmass[0][1];
-		(*ugraphs[a]).nodes.at(c).massval += localmass[0][2];
+		ugraphs[a].nodes.at(a).massval += localmass[0][0];
+		ugraphs[a].nodes.at(b).massval += localmass[0][1];
+		ugraphs[a].nodes.at(c).massval += localmass[0][2];
 
-		(*ugraphs[b]).nodes.at(a).massval += localmass[1][0];
-		(*ugraphs[b]).nodes.at(b).massval += localmass[1][1];
-		(*ugraphs[b]).nodes.at(c).massval += localmass[1][2];
+		ugraphs[b].nodes.at(a).massval += localmass[1][0];
+		ugraphs[b].nodes.at(b).massval += localmass[1][1];
+		ugraphs[b].nodes.at(c).massval += localmass[1][2];
 
-		(*ugraphs[c]).nodes.at(a).massval += localmass[2][0];
-		(*ugraphs[c]).nodes.at(b).massval += localmass[2][1];
-		(*ugraphs[c]).nodes.at(c).massval += localmass[2][2];
+		ugraphs[c].nodes.at(a).massval += localmass[2][0];
+		ugraphs[c].nodes.at(b).massval += localmass[2][1];
+		ugraphs[c].nodes.at(c).massval += localmass[2][2];
 	}
 }
 
@@ -240,10 +242,10 @@ inline void populateFval()
 {
 	for (size_t i =0; i < novert; i++)
 	{
-		for (size_t k = 0; k < (*ugraphs[i]).nodes.size(); k++)
+		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			size_t id = (*ugraphs[i]).index[k];
-			unodes[i].fval += (*ugraphs[i]).nodes.at(id).massval * (*ugraphs[id]).nodes.at(id).uval;
+			size_t id = ugraphs[i].index[k];
+			unodes[i].fval += ugraphs[i].nodes.at(id).massval * ugraphs[id].nodes.at(id).uval;
 		}
 	}
 }
@@ -256,10 +258,10 @@ inline void solveCG()
 
 	for (size_t i = 0; i < novert; i++)
 	{
-		for (size_t k = 0; k < (*ugraphs[i]).nodes.size(); k++)
+		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			id = (*ugraphs[i]).index[k];
-			temp += (*ugraphs[i]).nodes.at(id).stiffval * unodes[id].uval;
+			id = ugraphs[i].index[k];
+			temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
 		}
 		res[i] = unodes[i].fval - temp;
 	}
@@ -272,10 +274,10 @@ inline void solveCG()
 	{
 		for (size_t i = 0; i < novert; i++)
 		{
-			for (size_t k = 0; k < (*ugraphs[i]).nodes.size(); k++)
+			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
-				id = (*ugraphs[i]).index[k];
-				z[i] += (*ugraphs[i]).nodes.at(id).stiffval * dirc[id];
+				id = ugraphs[i].index[k];
+				z[i] += ugraphs[i].nodes.at(id).stiffval * dirc[id];
 			}
 		}
 
@@ -326,11 +328,11 @@ inline void invPower(Real& lambda)
 
 		for (size_t i = 0; i < novert; i++)
 		{
-			for (size_t k = 0; k < (*ugraphs[i]).nodes.size(); k++)
+			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
-				id = (*ugraphs[i]).index[k];
-				num[i] += (*ugraphs[i]).nodes.at(id).stiffval * unodes[id].uval;
-				denom[i] += (*ugraphs[i]).nodes.at(id).massval * unodes[id].uval;
+				id = ugraphs[i].index[k];
+				num[i] += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
+				denom[i] += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
 			}
 		}
 		Real n, d;
@@ -403,11 +405,11 @@ int main(int argc, char** argv)
 	size_t id;
 	for (size_t i = 0; i < novert; ++i)
 	{
-		for (size_t k = 0; k < (*ugraphs[i]).nodes.size(); k++)
+		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			id = (*ugraphs[i]).index[k];
-			fOut2 << i << "\t" << id << "\t" << (*ugraphs[i]).nodes[id].stiffval << std::endl;
-			fOut3 << i << "\t" << id << "\t" << (*ugraphs[i]).nodes[id].massval << std::endl;
+			id = ugraphs[i].index[k];
+			fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
+			fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
 		}
 		
 	}
@@ -427,6 +429,9 @@ int main(int argc, char** argv)
 	fOut4 << std::endl;
 
 	fOut4.close();
+	free(unodes);
+	free(knodes);
+	free(ugraphs);
 
 	string srcfile,tgtfile;
 	srcfile = "./reference-outputs/ksq-ref.txt";
