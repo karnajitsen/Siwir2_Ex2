@@ -301,7 +301,7 @@ inline void solveCG()
 	for (size_t i = 0; i < dirc.size(); i++)
 			denom += dirc[i] * z[i];
 
-	cout << "denom = " << denom;
+	//cout << "denom = " << denom;
 	//for (size_t i = 0; i < novert; i++)
 	//{
 	//	//unodes[i].uval /= normu;
@@ -315,12 +315,12 @@ inline void solveCG()
 		res[i] -= alpha * z[i];
 		del1 += res[i] * res[i];
 	}
-	for (size_t i = 0; i < novert; i++)
-	{
-		//unodes[i].uval /= normu;
-		cout << unodes[i].uval << " ";
-	}
-	cout << '\n';
+	//for (size_t i = 0; i < novert; i++)
+	//{
+	//	//unodes[i].uval /= normu;
+	//	cout << unodes[i].uval << " ";
+	//}
+	//cout << '\n';
 
 	if (del1 <= eps)
 		return;
@@ -356,7 +356,7 @@ inline void invPower(Real& lambda)
 			unodes[i].uval /= normu;
 			//cout << unodes[i].uval << " ";
 		}
-		cout << '\n';
+		//cout << '\n';
 		
 		vector<Real> num, denom;
 		Real t1 = 0.0, t2 = 0.0;
@@ -382,7 +382,8 @@ inline void invPower(Real& lambda)
 			d += unodes[i].uval * denom[i];
 		}
 
-		lambda = n / d;		
+		lambda = n / d;	
+		cout << lambda << " ";
 	} while ((abs(lambda - lambdaold)/lambda) > ERRLIMIT);
 }
 
