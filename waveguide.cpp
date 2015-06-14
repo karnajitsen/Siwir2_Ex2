@@ -236,7 +236,9 @@ inline void populateFval()
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
+			cout << "## 7777 ###" << '\n';
 			size_t id = ugraphs[i].index[k];
+			cout << "## 8888 ###" << '\n';
 			unodes[i].fval += ugraphs[i].nodes.at(id).massval * ugraphs[id].nodes.at(id).uval;
 		}
 	}
