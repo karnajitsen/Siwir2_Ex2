@@ -328,7 +328,7 @@ inline void invPower(Real& lambda)
 		cout << normu;
 		for (size_t i = 0; i < novert; i++)
 		{
-			unodes[i].uval /= normu;
+			//unodes[i].uval /= normu;
 			cout << unodes[i].uval << " ";
 		}
 		cout << '\n';
