@@ -371,7 +371,7 @@ inline void invPower(Real& lambda)
 		{
 			unodes[i].uval /= normu;
 			//cout << unodes[i].uval << " ";
-		}
+		} 
 		//cout << '\n';
 		
 		vector<Real> num, denom;
