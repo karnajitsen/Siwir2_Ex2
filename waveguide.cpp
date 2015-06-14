@@ -159,6 +159,12 @@ inline void init()
 		knodes[i].ycord = unodes[i].ycord;
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
 		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
+
+		for (int j = 0; j < ugraphs[i].index.size(); j++)
+		{
+			cout << " " << ugraphs[i].index[j];
+		}
+		cout << '\n';
 	}
 	//cout << "222" << '\n';
 
@@ -396,11 +402,11 @@ int main(int argc, char** argv)
 		cout << i;
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			cout << " " << ugraphs[i].index[k];
+			//cout << " " << ugraphs[i].index[k];
 			//fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
 			//fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
 		}
-		cout << '\n';
+		//cout << '\n';
 
 	}
 	cout << "\n Writing solution to files... ";
