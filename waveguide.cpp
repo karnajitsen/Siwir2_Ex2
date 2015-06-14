@@ -442,7 +442,7 @@ inline void invPower(Real& lambda)
 		}
 
 		lambda = n / d;	
-		//cout << " " << lambda << " ";
+		cout << " " << lambda << " ";
 	} while ((abs(lambda - lambdaold)/lambdaold) > ERRLIMIT);
 }
 
