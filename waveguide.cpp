@@ -66,7 +66,7 @@ inline void init()
 	cout << "no of vertex = " << novert << '\n';
 
 	
-	unodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
+	unodes = new node[novert];
 	
 
 	getline(ucircle, tmp);
@@ -152,7 +152,7 @@ inline void init()
 		
 	}
 
-	knodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
+	knodes = new node[novert];
 	for (size_t i; i < novert; i++)
 	{
 		knodes[i].xcord = unodes[i].xcord;
@@ -472,6 +472,7 @@ int main(int argc, char** argv)
 	free(unodes);
 	free(knodes);
 	free(ugraphs);
+	free(tri);
 	return 0;
 
 }
