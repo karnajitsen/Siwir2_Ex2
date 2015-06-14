@@ -160,7 +160,7 @@ inline void init()
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
 		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
 	}
-	cout << "222" << '\n';
+	//cout << "222" << '\n';
 
 }
 
@@ -170,17 +170,17 @@ inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vec
 
 	//std::vector< std::vector< double > > loc_stiff, loc_mass;
 	std::vector<double> corners(6, 0.0);
-	cout << "1 " << " " << b << " " << c << '\n';
+	//cout << "1 " << " " << b << " " << c << '\n';
 	corners[0] = ugraphs[a].nodes.at(a).xcord; 
 	corners[1] = ugraphs[a].nodes.at(a).ycord;
-	cout << "2 " << a << " " << b << " " << c << '\n';
+	//cout << "2 " << a << " " << b << " " << c << '\n';
 	corners[2] = ugraphs[b].nodes.at(b).xcord;
 	corners[3] = ugraphs[b].nodes.at(b).ycord;
-	cout << "3 " <<  a << " " << b << " " << c << '\n';
+	//cout << "3 " <<  a << " " << b << " " << c << '\n';
 	corners[4] = ugraphs[c].nodes.at(c).xcord;
 	corners[5] = ugraphs[c].nodes.at(c).ycord;
 	// pass the corners to the finite element
-	cout << a << " " << b << " " << c << '\n';
+	//cout << a << " " << b << " " << c << '\n';
 	my_element(corners);
 
 	localstiff =
@@ -197,25 +197,25 @@ inline void createGlobalMatrix()
 	
 	for (size_t i = 0; i < notriangle; i++)
 	{
-		cout << "333" << '\n';
+		//cout << "333" << '\n';
 		a = tri[i].vertex[0];
 		b = tri[i].vertex[1];
 		c = tri[i].vertex[2];
-		cout << "1 " << " " << b << " " << c << '\n';
+		//cout << "1 " << " " << b << " " << c << '\n';
 		createLocalMatrix(a, b, c, localstiff, localmass);
-		cout << "555" << '\n';
+		//cout << "555" << '\n';
 		ugraphs[a].nodes.at(a).stiffval += localstiff[0][0];
 		ugraphs[a].nodes.at(b).stiffval += localstiff[0][1];
 		ugraphs[a].nodes.at(c).stiffval += localstiff[0][2];
-		cout << "666" << '\n';
+		//cout << "666" << '\n';
 		ugraphs[b].nodes.at(a).stiffval += localstiff[1][0];
 		ugraphs[b].nodes.at(b).stiffval += localstiff[1][1];
 		ugraphs[b].nodes.at(c).stiffval += localstiff[1][2];
-		cout << "777" << '\n';
+		//cout << "777" << '\n';
 		ugraphs[c].nodes.at(a).stiffval += localstiff[2][0];
 		ugraphs[c].nodes.at(b).stiffval += localstiff[2][1];
 		ugraphs[c].nodes.at(c).stiffval += localstiff[2][2];
-		cout << "88" << '\n';
+		//cout << "88" << '\n';
 		ugraphs[a].nodes.at(a).massval += localmass[0][0];
 		ugraphs[a].nodes.at(b).massval += localmass[0][1];
 		ugraphs[a].nodes.at(c).massval += localmass[0][2];
@@ -302,9 +302,12 @@ inline void invPower(Real& lambda)
 {
 	Real lambdaold, normu = 0.0;
 	do{
+		cout << "333" << '\n';
 		lambdaold = lambda;
 		populateFval();
+		cout << "444" << '\n';
 		solveCG();
+		cout << "555" << '\n';
 		for (size_t i = 0; i < novert; i++)
 		{
 			normu += unodes[i].uval * unodes[i].uval;
@@ -371,11 +374,11 @@ int main(int argc, char** argv)
 	eps = atof(argv[2]);
     	
 	init();
-	cout << "222" << '\n';
+	//cout << "222" << '\n';
 	createGlobalMatrix();
 	cout << "222" << '\n';
 	invPower(lambda);
-	cout << "222" << '\n';
+	cout << "999" << '\n';
 	cout << "\n Eigenvalue = " << lambda;
 	cout << "\n Writing solution to files... ";
 
