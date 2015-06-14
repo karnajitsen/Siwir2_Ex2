@@ -92,7 +92,7 @@ inline void init()
 	}
 
 	getline(ucircle, tmp);
-
+	cout << tmp;
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));
 	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
 	getline(ucircle, tmp);
