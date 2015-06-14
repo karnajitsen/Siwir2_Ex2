@@ -100,7 +100,7 @@ inline void init()
 	
 	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
-		
+		cout << "6666666"<< '\n';
 		ugraphs[d].nodes.emplace(d, unodes[d]);
 		ugraphs[d].nodes.emplace(e, unodes[e]);
 		ugraphs[d].nodes.emplace(f, unodes[f]);
@@ -196,7 +196,7 @@ inline void createGlobalMatrix()
 		a = tri[i].vertex[0];
 		b = tri[i].vertex[1];
 		c = tri[i].vertex[2];
-		cout << "444" << '\n';
+		cout << "1 " << " " << b << " " << c << '\n';
 		createLocalMatrix(a, b, c, localstiff, localmass);
 		cout << "555" << '\n';
 		ugraphs[a].nodes.at(a).stiffval += localstiff[0][0];
