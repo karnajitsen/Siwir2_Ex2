@@ -84,7 +84,7 @@ inline void init()
 		unodes[i].massval = 0.0;
 		unodes[i].stiffval = 0.0;
 		unodes[i].vertno = i;
-		cout << "2 " << a << " " << unodes[i].xcord << " " << unodes[i].ycord << '\n';
+		//cout << "2 " << a << " " << unodes[i].xcord << " " << unodes[i].ycord << '\n';
 		if ((b*b + c*c) >= 1.0)  // Check for precision error ???
 			unodes[i].boundary = true;
 		else
@@ -106,12 +106,12 @@ inline void init()
 	{
 		cout << "6666666"<< '\n';
 		cout << "2 " << d << " " << e << " " << f << '\n';
-		node nd;
+		//node nd;
 		cout << "eee";
 		//ugraphs[d].nodes.emplace(d, nd);
-		/*ugraphs[d].nodes.emplace(d, unodes[d]);
-		ugraphs[d].nodes.emplace(e, unodes[e]);
-		ugraphs[d].nodes.emplace(f, unodes[f]);*/
+		ugraphs[d].nodes.insert(std::pair<size_t,node>(d, unodes[d]));
+		//ugraphs[d].nodes.emplace(e, unodes[e]);
+		//ugraphs[d].nodes.emplace(f, unodes[f]);
 		cout << "77777" << '\n';
 		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), d) != ugraphs[d].index.end())
 					ugraphs[d].index.emplace_back(d);
