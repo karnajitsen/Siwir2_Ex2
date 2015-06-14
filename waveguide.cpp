@@ -70,13 +70,13 @@ inline void init()
 	
 
 	getline(ucircle, tmp);
-	cout << tmp << '\n';
+	//cout << tmp << '\n';
 	for (size_t i = 0; i<novert; i++)
 	{
 		ucircle >> a;
 		ucircle >> b;
 		ucircle >> c;
-		cout << "2 " << a << " " << b << " " << c << '\n';
+		
 		unodes[i].xcord = b;
 		unodes[i].ycord = c;
 		unodes[i].fval = 0.0;
@@ -84,6 +84,7 @@ inline void init()
 		unodes[i].massval = 0.0;
 		unodes[i].stiffval = 0.0;
 		unodes[i].vertno = i;
+		cout << "2 " << a << " " << unodes[i].xcord << " " << unodes[i].ycord << '\n';
 		if ((b*b + c*c) >= 1.0)  // Check for precision error ???
 			unodes[i].boundary = true;
 		else
