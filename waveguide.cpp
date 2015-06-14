@@ -265,6 +265,7 @@ inline void solveCG()
 		}
 		res.emplace_back(unodes[i].fval - temp);
 		dirc.emplace_back(unodes[i].fval - temp);
+		z.emplace_back(0.0);
 		temp = 0.0;
 	}
 
@@ -293,7 +294,7 @@ inline void solveCG()
 				id = ugraphs[i].index[k];
 				temp += ugraphs[i].nodes.at(id).stiffval * dirc[id];
 			}
-			z.emplace_back(temp);
+			z[i] = temp;
 			temp = 0.0;
 		}
 
