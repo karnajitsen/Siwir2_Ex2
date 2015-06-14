@@ -401,8 +401,8 @@ inline void invPower(Real& lambda)
 	do{		
 		lambdaold = lambda;
 		populateFval();
-		//solveCG();
-		solveGS();
+		solveCG();
+		//solveGS();
 		//cout << "555" << '\n';
 		normu = 0.0;
 		for (size_t i = 0; i < novert; i++)
