@@ -76,6 +76,7 @@ inline void init()
 		ucircle >> a;
 		ucircle >> b;
 		ucircle >> c;
+		cout << "2 " << a << " " << b << " " << c << '\n';
 		unodes[i].xcord = b;
 		unodes[i].ycord = c;
 		unodes[i].fval = 0.0;
