@@ -274,11 +274,11 @@ inline void solveCG()
 	//	cout << unodes[i].fval << " ";
 	//}
 
-	//for (size_t i = 0; i < novert; i++)
-	//{
-	//	//unodes[i].uval /= normu;
-	//	cout << dirc[i] << " ";
-	//}
+	for (size_t i = 0; i < novert; i++)
+	{
+		//unodes[i].uval /= normu;
+		cout << dirc[i] << " ";
+	}
 	
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
@@ -295,6 +295,13 @@ inline void solveCG()
 			}
 			z.emplace_back(temp);
 			temp = 0.0;
+		}
+
+		cout << '\n\n';
+		for (size_t i = 0; i < novert; i++)
+		{
+			//unodes[i].uval /= normu;
+			cout << z[i] << " ";
 		}
 
 		denom = 0.0;
@@ -317,13 +324,14 @@ inline void solveCG()
 	//	//unodes[i].uval /= normu;
 	//	cout << unodes[i].uval << " ";
 	//}
-	cout << '\n';
+	
 	cout << "delta = " << del1 << " " << del0;
-	cout << "beta = " << beta;
+	
 	if (sqrt(del1) <= eps)
 		return;
 	beta = del1 / del0;
-
+	cout << "beta = " << beta;
+	cout << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
 		dirc[i] = res[i] + beta * dirc[i];
