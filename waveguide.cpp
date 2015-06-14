@@ -29,7 +29,7 @@ struct node{
 struct graph{
 	 
      std::map<size_t,node> nodes;
-	 std::vector<size_t> index;
+	 std::vector<int> index;
      size_t length;
 };
 
@@ -56,7 +56,7 @@ inline void init()
 	string tmp;
 	ifstream ucircle;
 	Real a, b, c;
-	size_t d, e, f;
+	int d, e, f;
 	//node * cn;
 
 	ucircle.open("./inputs/unit_circle.txt");
