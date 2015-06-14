@@ -255,7 +255,7 @@ inline void solveCG()
 	vector<Real> res, dirc,z;
 	Real temp = 0.0, del0 = 0.0, del1 = 0.0, denom = 0.0, alpha = 0.0, beta = 0.0;
 	size_t id = 0;
-	cout << "555" << '\n';
+	//cout << "555" << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
@@ -325,10 +325,13 @@ inline void invPower(Real& lambda)
 		}
 		
 		normu = sqrt(normu);
+		cout << normu;
 		for (size_t i = 0; i < novert; i++)
 		{
 			unodes[i].uval /= normu;
+			cout << unodes[i].uval << " ";
 		}
+		cout << '\n';
 		
 		vector<Real> num, denom;
 		Real t1 = 0.0, t2 = 0.0;
