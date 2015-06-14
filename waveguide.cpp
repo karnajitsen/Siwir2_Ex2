@@ -416,7 +416,7 @@ int main(int argc, char** argv)
 	
 	for (size_t i = 0; i < novert; ++i) 
 	{
-		fOut1 << knodes[i].xcord << "\t" << knodes[i].ycord << "\t" << knodes[i].uval << std::endl;			
+		fOut1 << knodes[i].xcord << " " << knodes[i].ycord << " " << knodes[i].uval << std::endl;			
 	}
 		fOut1 << std::endl;
 	
@@ -432,8 +432,8 @@ int main(int argc, char** argv)
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
 			id = ugraphs[i].index[k];
-			fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
-			fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
+			fOut2 << i << " " << id << " " << ugraphs[i].nodes[id].stiffval << std::endl;
+			fOut3 << i << " " << id << " " << ugraphs[i].nodes[id].massval << std::endl;
 		}
 		
 	}
@@ -448,7 +448,7 @@ int main(int argc, char** argv)
 
 	for (size_t i = 0; i < novert; ++i)
 	{
-		fOut4 << unodes[i].xcord << "\t" << unodes[i].ycord << "\t" << unodes[i].uval << std::endl;
+		fOut4 << unodes[i].xcord << " " << unodes[i].ycord << " " << unodes[i].uval << std::endl;
 	}
 	fOut4 << std::endl;
 
