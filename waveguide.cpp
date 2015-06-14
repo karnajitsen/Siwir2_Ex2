@@ -67,6 +67,7 @@ inline void init()
 
 	ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph));
 	unodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
+	
 
 	getline(ucircle, tmp);
 	
@@ -91,9 +92,11 @@ inline void init()
 	}
 
 	getline(ucircle, tmp);
+
+	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));
+	unodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
 	getline(ucircle, tmp);
-	
-	for (notriangle = 0; ucircle >> d && ucircle >> e && ucircle >> f; notriangle++)
+	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
 		
 		ugraphs[d].nodes.emplace(d, unodes[d]);
@@ -135,9 +138,9 @@ inline void init()
 			ugraphs[f].index.emplace_back(e);	
 		
 		//cout << d << " " << e << " " << f << '\n';
-		tri[notriangle].vertex[0] = d;
-		tri[notriangle].vertex[1] = e;
-		tri[notriangle].vertex[2] = f;
+		tri[i].vertex[0] = d;
+		tri[i].vertex[1] = e;
+		tri[i].vertex[2] = f;
 		
 	}
 
