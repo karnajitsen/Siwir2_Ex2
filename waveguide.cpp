@@ -92,10 +92,9 @@ inline void init()
 	}
 
 	getline(ucircle, tmp);	
-	notriangle = 1976;
-	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
+
 	getline(ucircle, tmp);
-	cout << "***  " << tmp;
+	
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
 	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
 	
@@ -166,14 +165,17 @@ inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vec
 
 	//std::vector< std::vector< double > > loc_stiff, loc_mass;
 	std::vector<double> corners(6, 0.0);
-	
+	cout << "1 " << " " << b << " " << c << '\n';
 	corners[0] = ugraphs[a].nodes.at(a).xcord; 
 	corners[1] = ugraphs[a].nodes.at(a).ycord;
+	cout << "2 " << a << " " << b << " " << c << '\n';
 	corners[2] = ugraphs[b].nodes.at(b).xcord;
 	corners[3] = ugraphs[b].nodes.at(b).ycord;
+	cout << "3 " <<  a << " " << b << " " << c << '\n';
 	corners[4] = ugraphs[c].nodes.at(c).xcord;
 	corners[5] = ugraphs[c].nodes.at(c).ycord;
 	// pass the corners to the finite element
+	cout << a << " " << b << " " << c << '\n';
 	my_element(corners);
 
 	localstiff =
@@ -196,7 +198,7 @@ inline void createGlobalMatrix()
 		c = tri[i].vertex[2];
 		cout << "444" << '\n';
 		createLocalMatrix(a, b, c, localstiff, localmass);
-
+		cout << "555" << '\n';
 		ugraphs[a].nodes.at(a).stiffval += localstiff[0][0];
 		ugraphs[a].nodes.at(b).stiffval += localstiff[0][1];
 		ugraphs[a].nodes.at(c).stiffval += localstiff[0][2];
