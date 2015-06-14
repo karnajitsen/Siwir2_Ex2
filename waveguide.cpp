@@ -302,11 +302,7 @@ inline void solveCG()
 			denom += dirc[i] * z[i];
 
 	//cout << "denom = " << denom;
-	//for (size_t i = 0; i < novert; i++)
-	//{
-	//	//unodes[i].uval /= normu;
-	//	cout << dirc[i] << " ";
-	//}
+	
 	alpha = del0 / denom;
 	del1 = 0.0;
 	for (size_t i = 0; i < novert; i++)
@@ -315,12 +311,12 @@ inline void solveCG()
 		res[i] -= alpha * z[i];
 		del1 += res[i] * res[i];
 	}
-	//for (size_t i = 0; i < novert; i++)
-	//{
-	//	//unodes[i].uval /= normu;
-	//	cout << unodes[i].uval << " ";
-	//}
-	//cout << '\n';
+	for (size_t i = 0; i < novert; i++)
+	{
+		//unodes[i].uval /= normu;
+		cout << unodes[i].uval << " ";
+	}
+	cout << '\n';
 
 	if (del1 <= eps)
 		return;
