@@ -184,9 +184,9 @@ inline void createGlobalMatrix()
 	for (size_t i = 0; i < notriangle; i++)
 	{
 		cout << "333" << '\n';
-		a = tri[notriangle].vertex[0];
-		b = tri[notriangle].vertex[1];
-		c = tri[notriangle].vertex[2];
+		a = tri[i].vertex[0];
+		b = tri[i].vertex[1];
+		c = tri[i].vertex[2];
 		cout << "444" << '\n';
 		createLocalMatrix(a, b, c, localstiff, localmass);
 
