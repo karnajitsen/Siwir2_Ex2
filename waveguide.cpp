@@ -273,12 +273,7 @@ inline void solveCG()
 	//dirc = res;
 	while (sqrt(del0) > eps)
 	{
-		for (size_t i = 0; i < novert; i++)
-		{
-			//unodes[i].uval /= normu;
-			cout << unodes[i].uval << " ";
-		}
-		cout << '\n';
+		
 		for (size_t i = 0; i < novert; i++)
 		{
 			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
@@ -302,6 +297,12 @@ inline void solveCG()
 		res[i] -= alpha * z[i];
 		del1 += res[i] * res[i];
 	}
+	for (size_t i = 0; i < novert; i++)
+	{
+		//unodes[i].uval /= normu;
+		cout << unodes[i].uval << " ";
+	}
+	cout << '\n';
 
 	if (del1 <= eps)
 		return;
