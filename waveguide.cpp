@@ -252,7 +252,12 @@ inline void populateFval()
 
 inline void solveGS()
 {
-	Real norm = 0.0, temp=0.0;
+	Real r = 0.0,norm = 0.0, temp=0.0;
+	vector<double> preu;
+	for (size_t i = 0; i < novert; i++)
+	{
+		preu.emplace_back(0.0);
+	}
 	
 	do{
 		for (size_t i = 0; i < novert; i++)
@@ -265,13 +270,16 @@ inline void solveGS()
 				temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
 
 			}
+			preu[i] = unodes[i].uval;
 			unodes[i].uval = (unodes[i].fval - temp) / ugraphs[i].nodes.at(i).stiffval;
 			temp = 0.0;
 		}
 		norm = 0.0;
+		r = 0.0;
 		for (size_t i = 0; i < novert; i++)
 		{
-			norm += unodes[i].uval*unodes[i].uval;
+			r = unodes[i].uval-preu[i];
+			norm += r*r;
 		}
 		norm = sqrt(norm);
 		cout << norm << '\n';
