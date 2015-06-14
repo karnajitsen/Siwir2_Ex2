@@ -289,7 +289,7 @@ inline void solveCG()
 			denom += dirc[i] * z[i];
 
 	alpha = del0 / denom;
-
+	del1 = 0.0;
 	for (size_t i = 0; i < novert; i++)
 	{
 		unodes[i].uval += alpha * dirc[i];	
