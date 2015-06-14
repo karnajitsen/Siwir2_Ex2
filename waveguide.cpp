@@ -94,7 +94,7 @@ inline void init()
 	getline(ucircle, tmp);
 
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));
-	unodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
+	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
 	getline(ucircle, tmp);
 	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
