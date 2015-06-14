@@ -21,7 +21,7 @@ using namespace std;
 using namespace ::_COLSAMM_;
 
 struct node{
-	double xcord, ycord, stiffval, massval, uval, fval;
+	Real xcord, ycord, stiffval, massval, uval, fval;
 	size_t vertno;
 	bool boundary;
 };
@@ -46,7 +46,7 @@ node* __restrict unodes = nullptr;
 triang * __restrict tri = nullptr;
 size_t novert, notriangle;
 
-inline double kxy2(const double x, const double y)
+inline double kxy2(const Real x, const Real y)
 {
 	return (((100.0 + delta) * exp(-50.0*(x*x + y*y))) - 100.0);
 }
@@ -250,6 +250,33 @@ inline void populateFval()
 	}
 }
 
+inline void solveGS()
+{
+	Real norm, temp;
+	
+	do{
+		for (size_t i = 0; i < novert; i++)
+		{
+			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
+			{
+				
+				size_t id = ugraphs[i].index[k];
+				if (i == id) continue;
+				temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
+
+			}
+			unodes[i].uval = (unodes[i].fval - temp) / ugraphs[i].nodes.at(i).stiffval;
+			temp = 0.0;
+		}
+		norm = 0.0;
+		for (size_t i = 0; i < novert; i++)
+		{
+			norm += unodes[i].uval*unodes[i].uval;
+		}
+		norm = sqrt(norm);
+	} while (norm > eps);
+}
+
 inline void solveCG()
 {
 	vector<Real> res, dirc,z;
@@ -365,7 +392,8 @@ inline void invPower(Real& lambda)
 	do{		
 		lambdaold = lambda;
 		populateFval();
-		solveCG();
+		//solveCG();
+		solveGS();
 		//cout << "555" << '\n';
 		normu = 0.0;
 		for (size_t i = 0; i < novert; i++)
@@ -381,7 +409,6 @@ inline void invPower(Real& lambda)
 			//cout << unodes[i].uval << " ";
 		} 
 		//cout << '\n';
-		
 		
 
 		for (size_t i = 0; i < novert; i++)
@@ -406,7 +433,7 @@ inline void invPower(Real& lambda)
 		}
 
 		lambda = n / d;	
-		cout << " " << lambda << " ";
+		//cout << " " << lambda << " ";
 	} while ((abs(lambda - lambdaold)/lambdaold) > ERRLIMIT);
 }
 
