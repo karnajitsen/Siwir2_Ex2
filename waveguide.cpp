@@ -395,10 +395,11 @@ int main(int argc, char** argv)
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			cout << ugraphs[i].index[k] << '\n';
+			cout << i << " " <<ugraphs[i].index[k];
 			//fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
 			//fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
 		}
+		cout << '\n';
 
 	}
 	cout << "\n Writing solution to files... ";
