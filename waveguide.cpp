@@ -312,12 +312,12 @@ inline void solveCG()
 inline void invPower(Real& lambda)
 {
 	Real lambdaold = 0.0, normu = 0.0;
-	do{
-		
+	do{		
 		lambdaold = lambda;
 		populateFval();
 		solveCG();
-		cout << "555" << '\n';
+		//cout << "555" << '\n';
+		normu = 0.0;
 		for (size_t i = 0; i < novert; i++)
 		{
 			normu += unodes[i].uval * unodes[i].uval;
@@ -390,26 +390,12 @@ int main(int argc, char** argv)
 	eps = atof(argv[2]);
     	
 	init();
-	//cout << "222" << '\n';
 	createGlobalMatrix();
-	cout << "222" << '\n';
 	invPower(lambda);
-	cout << "999" << '\n';
+	
 	cout << "\n Eigenvalue = " << lambda;
-	//size_t id;
-	//for (size_t i = 0; i < novert; ++i)
-	//{
-	//	//cout << i;
-	//	for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
-	//	{
-	//		id = ugraphs[i].index[k];
-	//		fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
-	//		fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
-	//	}
-	//	//cout << '\n';
 
-	//}
-	cout << "\n Writing solution to files... ";
+	cout << "\n Writing solution to files... \n\n";
 
 	std::string fname1 = std::string("ksq.txt");
 	std::ofstream	fOut1(fname1);
