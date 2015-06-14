@@ -297,6 +297,14 @@ inline void solveCG()
 			temp = 0.0;
 		}
 
+		cout << "\n res = ";
+		for (size_t i = 0; i < 10; i++)
+		{
+			//unodes[i].uval /= normu;
+			cout << res[i] << " ";
+		}
+		cout << '\n';
+
 		cout << "\n zzzz  = ";
 		for (size_t i = 0; i < 10; i++)
 		{
@@ -325,19 +333,13 @@ inline void solveCG()
 		res[i] -= alpha * z[i];
 		del1 += res[i] * res[i];
 	}
-	cout << "\n uval = ";
-	for (size_t i = 0; i < 10; i++)
-	{
-		//unodes[i].uval /= normu;
-		cout << unodes[i].uval << " ";
-	}
-	cout << '\n';
+	
 	//cout << "delta = " << del1 << " " << del0;
 	
 	if (sqrt(del1) <= eps)
 		return;
 	beta = del1 / del0;
-	//cout << "beta = " << beta;
+	cout << "beta = " << beta;
 	cout << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
