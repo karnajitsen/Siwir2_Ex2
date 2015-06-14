@@ -275,11 +275,11 @@ inline void solveCG()
 	//	cout << unodes[i].fval << " ";
 	//}
 
-	for (size_t i = 0; i < 10; i++)
-	{
-		//unodes[i].uval /= normu;
-		cout << dirc[i] << " ";
-	}
+	//for (size_t i = 0; i < 10; i++)
+	//{
+	//	//unodes[i].uval /= normu;
+	//	cout << dirc[i] << " ";
+	//}
 	
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
@@ -312,22 +312,22 @@ inline void solveCG()
 		//	//unodes[i].uval /= normu;
 		//	cout << z[i] << " ";
 		//}
-		cout << "\n dirc = ";
-		for (size_t i = 0; i < 10; i++)
-		{
-			//unodes[i].uval /= normu;
-			cout << dirc[i] << " ";
-		}
+		//cout << "\n dirc = ";
+		//for (size_t i = 0; i < 10; i++)
+		//{
+		//	//unodes[i].uval /= normu;
+		//	cout << dirc[i] << " ";
+		//}
 
 		denom = 0.0;
 	for (size_t i = 0; i < dirc.size(); i++)
 			denom += dirc[i] * z[i];
 
-	cout << "denom = " << denom;
+	//cout << "denom = " << denom;
 	
 	alpha = del0 / denom;
 	del1 = 0.0;
-	cout << "  alpha = " << alpha;
+	//cout << "  alpha = " << alpha;
 	for (size_t i = 0; i < novert; i++)
 	{
 		unodes[i].uval += alpha * dirc[i];	
@@ -335,13 +335,13 @@ inline void solveCG()
 		del1 += res[i] * res[i];
 	}
 	
-	cout << "delta = " << del1 << " " << del0;
+	//cout << "delta = " << del1 << " " << del0;
 	
 	if (sqrt(del1) <= eps)
 		return;
 	beta = del1 / del0;
-	cout << "beta = " << beta;
-	cout << '\n';
+	//cout << "beta = " << beta;
+	//cout << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
 		dirc[i] = res[i] + beta * dirc[i];
@@ -358,7 +358,7 @@ inline void invPower(Real& lambda)
 		lambdaold = lambda;
 		populateFval();
 		solveCG();
-		//cout << "555" << '\n';
+		cout << "555" << '\n';
 		normu = 0.0;
 		for (size_t i = 0; i < novert; i++)
 		{
