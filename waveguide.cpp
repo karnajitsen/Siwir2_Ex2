@@ -254,13 +254,15 @@ inline void solveCG()
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
+			cout << "####666" << '\n';
 			id = ugraphs[i].index[k];
+			cout << "&&&&666" << '\n';
 			temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
 		}
+		cout << "@@@@@666" << '\n';
 		res[i] = unodes[i].fval - temp;
 	}
-	cout << "666" << '\n';
-
+	
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
 	cout << "777" << '\n';
