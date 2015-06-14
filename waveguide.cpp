@@ -80,7 +80,7 @@ inline void init()
 		unodes[i].xcord = b;
 		unodes[i].ycord = c;
 		unodes[i].fval = 0.0;
-		unodes[i].uval = 0.0;
+		unodes[i].uval = 1.0;
 		unodes[i].massval = 0.0;
 		unodes[i].stiffval = 0.0;
 		unodes[i].vertno = i;
@@ -268,17 +268,17 @@ inline void solveCG()
 		temp = 0.0;
 	}
 
-	for (size_t i = 0; i < novert; i++)
-	{
-		//unodes[i].uval /= normu;
-		cout << unodes[i].fval << " ";
-	}
+	//for (size_t i = 0; i < novert; i++)
+	//{
+	//	//unodes[i].uval /= normu;
+	//	cout << unodes[i].fval << " ";
+	//}
 
-	for (size_t i = 0; i < novert; i++)
-	{
-		//unodes[i].uval /= normu;
-		cout << dirc[i] << " ";
-	}
+	//for (size_t i = 0; i < novert; i++)
+	//{
+	//	//unodes[i].uval /= normu;
+	//	cout << dirc[i] << " ";
+	//}
 	
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
