@@ -236,9 +236,9 @@ inline void populateFval()
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			cout << "## 7777 ###" << ugraphs[i].index.size() << '\n';
+			//cout << "## 7777 ###" << ugraphs[i].index.size() << '\n';
 			size_t id = ugraphs[i].index[k];
-			cout << "## 8888 ###" << '\n';
+			//cout << "## 8888 ###" << '\n';
 			unodes[i].fval += ugraphs[i].nodes.at(id).massval * ugraphs[id].nodes.at(id).uval;
 		}
 	}
@@ -249,7 +249,7 @@ inline void solveCG()
 	vector<Real> res, dirc,z;
 	Real temp, del0, del1, denom, alpha, beta;
 	size_t id;
-
+	cout << "555" << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
@@ -259,10 +259,11 @@ inline void solveCG()
 		}
 		res[i] = unodes[i].fval - temp;
 	}
+	cout << "666" << '\n';
 
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
-
+	cout << "777" << '\n';
 	dirc = res;
 	while (sqrt(del0) > eps)
 	{
