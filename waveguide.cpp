@@ -281,7 +281,7 @@ inline void solveGS()
 			r = unodes[i].uval-preu[i];
 			norm += r*r;
 		}
-		norm = sqrt(norm);
+		norm = sqrt(norm/novert);
 		cout << norm << '\n';
 	} while (norm > eps);
 }
