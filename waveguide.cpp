@@ -297,11 +297,17 @@ inline void solveCG()
 			temp = 0.0;
 		}
 
-		//cout << '\n\n';
+		cout << "\n zzzz  = ";
 		for (size_t i = 0; i < 10; i++)
 		{
 			//unodes[i].uval /= normu;
 			cout << z[i] << " ";
+		}
+		cout << "\n dirc = ";
+		for (size_t i = 0; i < 10; i++)
+		{
+			//unodes[i].uval /= normu;
+			cout << dirc[i] << " ";
 		}
 
 		denom = 0.0;
