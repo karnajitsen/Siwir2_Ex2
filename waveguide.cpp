@@ -100,23 +100,16 @@ inline void init()
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
 	//ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph));
 	ugraphs = new graph[novert];
-	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
+	tri = new triang[notriangle];
 	cout << "no of triangle = " << notriangle << '\n';
 	getline(ucircle, tmp);
 	
 	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
-		cout << "6666666"<< '\n';
-		cout << "2 " << d << " " << e << " " << f << '\n';
-		//node nd;
-		cout << "eee";
-		//unodes[d].fval = 2;
-		//ugraphs[d].nodes.emplace(d, nd);
-
-		ugraphs[d].nodes.insert(std::pair<size_t,node>(d, unodes[d]));
-		//ugraphs[d].nodes.emplace(e, unodes[e]);
-		//ugraphs[d].nodes.emplace(f, unodes[f]);
-		cout << "77777" << '\n';
+		ugraphs[d].nodes.emplace(d, unodes[d]);
+		ugraphs[d].nodes.emplace(e, unodes[e]);
+		ugraphs[d].nodes.emplace(f, unodes[f]);
+		//cout << "77777" << '\n';
 		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), d) != ugraphs[d].index.end())
 					ugraphs[d].index.emplace_back(d);
 		
@@ -160,7 +153,6 @@ inline void init()
 	}
 
 	knodes = (node*)memalign(ALLIGNMENT, novert*sizeof(node));
-	cout << "222" << '\n';
 	for (size_t i; i < novert; i++)
 	{
 		knodes[i].xcord = unodes[i].xcord;
@@ -215,15 +207,15 @@ inline void createGlobalMatrix()
 		ugraphs[a].nodes.at(a).stiffval += localstiff[0][0];
 		ugraphs[a].nodes.at(b).stiffval += localstiff[0][1];
 		ugraphs[a].nodes.at(c).stiffval += localstiff[0][2];
-
+		cout << "666" << '\n';
 		ugraphs[b].nodes.at(a).stiffval += localstiff[1][0];
 		ugraphs[b].nodes.at(b).stiffval += localstiff[1][1];
 		ugraphs[b].nodes.at(c).stiffval += localstiff[1][2];
-
+		cout << "777" << '\n';
 		ugraphs[c].nodes.at(a).stiffval += localstiff[2][0];
 		ugraphs[c].nodes.at(b).stiffval += localstiff[2][1];
 		ugraphs[c].nodes.at(c).stiffval += localstiff[2][2];
-
+		cout << "88" << '\n';
 		ugraphs[a].nodes.at(a).massval += localmass[0][0];
 		ugraphs[a].nodes.at(b).massval += localmass[0][1];
 		ugraphs[a].nodes.at(c).massval += localmass[0][2];
