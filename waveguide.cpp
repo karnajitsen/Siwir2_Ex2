@@ -274,7 +274,7 @@ inline void solveCG()
 	//	cout << unodes[i].fval << " ";
 	//}
 
-	for (size_t i = 0; i < novert; i++)
+	for (size_t i = 0; i < 10; i++)
 	{
 		//unodes[i].uval /= normu;
 		cout << dirc[i] << " ";
@@ -298,7 +298,7 @@ inline void solveCG()
 		}
 
 		cout << '\n\n';
-		for (size_t i = 0; i < novert; i++)
+		for (size_t i = 0; i < 10; i++)
 		{
 			//unodes[i].uval /= normu;
 			cout << z[i] << " ";
