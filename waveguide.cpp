@@ -158,7 +158,7 @@ inline void init()
 		knodes[i].xcord = unodes[i].xcord;
 		knodes[i].ycord = unodes[i].ycord;
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
-		//std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
+		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
 	}
 	//cout << "222" << '\n';
 
@@ -390,6 +390,17 @@ int main(int argc, char** argv)
 	invPower(lambda);
 	cout << "999" << '\n';
 	cout << "\n Eigenvalue = " << lambda;
+
+	for (size_t i = 0; i < novert; ++i)
+	{
+		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
+		{
+			cout << ugraphs[i].index[k] << '\n';
+			//fOut2 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].stiffval << std::endl;
+			//fOut3 << i << "\t" << id << "\t" << ugraphs[i].nodes[id].massval << std::endl;
+		}
+
+	}
 	cout << "\n Writing solution to files... ";
 
 	std::string fname1 = std::string("ksq.txt");
