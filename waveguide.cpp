@@ -67,8 +67,6 @@ inline void init()
 
 	
 	unodes = new node[novert];
-	
-
 	getline(ucircle, tmp);
 	//cout << tmp << '\n';
 	for (size_t i = 0; i<novert; i++)
@@ -238,6 +236,7 @@ inline void createGlobalMatrix()
 
 inline void populateFval()
 {
+	Real temp = 0.0;
 	for (size_t i =0; i < novert; i++)
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
@@ -245,8 +244,10 @@ inline void populateFval()
 			//cout << "## 7777 ###" << ugraphs[i].index.size() << '\n';
 			size_t id = ugraphs[i].index[k];
 			//cout << "## 8888 ###" << '\n';
-			unodes[i].fval += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
+			temp += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
 		}
+		unodes[i].fval = temp;
+		temp = 0.0;
 	}
 }
 
@@ -414,7 +415,7 @@ inline void invPower(Real& lambda)
 		//cout << normu;
 		for (size_t i = 0; i < novert; i++)
 		{
-			unodes[i].uval /= normu;
+			unodes[i].uval = unodes[i].uval / normu;
 			//cout << unodes[i].uval << " ";
 		} 
 		//cout << '\n';
