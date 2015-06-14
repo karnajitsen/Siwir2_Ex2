@@ -318,7 +318,7 @@ inline void solveCG()
 	
 	alpha = del0 / denom;
 	del1 = 0.0;
-	//cout << "alpha = " << alpha;
+	cout << "  alpha = " << alpha;
 	for (size_t i = 0; i < novert; i++)
 	{
 		unodes[i].uval += alpha * dirc[i];	
