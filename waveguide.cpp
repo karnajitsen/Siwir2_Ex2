@@ -98,7 +98,7 @@ inline void init()
 	getline(ucircle, tmp);
 	
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
-	ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph*));
+	ugraphs = (graph**)memalign(ALLIGNMENT, novert*sizeof(graph*));
 	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
 	cout << "no of triangle = " << notriangle << '\n';
 	getline(ucircle, tmp);
