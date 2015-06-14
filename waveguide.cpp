@@ -105,7 +105,7 @@ inline void init()
 		cout << "6666666"<< '\n';
 		cout << "2 " << d << " " << e << " " << f << '\n';
 		cout << "eee" << unodes[0].fval;
-		ugraphs[d].nodes.emplace(d, unodes[0])
+		ugraphs[d].nodes.emplace(d, unodes[0]);
 		/*ugraphs[d].nodes.emplace(d, unodes[d]);
 		ugraphs[d].nodes.emplace(e, unodes[e]);
 		ugraphs[d].nodes.emplace(f, unodes[f]);*/
