@@ -16,7 +16,7 @@
 typedef double Real;
 typedef int unint;
 #define ALLIGNMENT 64
-
+  
 using namespace std;
 using namespace ::_COLSAMM_;
 
