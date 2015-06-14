@@ -97,7 +97,7 @@ inline void init()
 	getline(ucircle, tmp);
 	cout << "***  " << tmp;
 	getline(ucircle, tmp);
-	cout << "***  " << tmp;
+	cout << "***  " << tmp; 
 	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
 		
