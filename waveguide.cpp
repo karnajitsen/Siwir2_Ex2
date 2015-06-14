@@ -180,12 +180,13 @@ inline void createGlobalMatrix()
 {
 	std::vector<std::vector<double>> localstiff, localmass;
 	size_t a, b, c;
+	cout << "333" << '\n';
 	for (size_t i = 0; i < notriangle; i++)
 	{
 		a = tri[notriangle].vertex[0];
 		b = tri[notriangle].vertex[1];
 		c = tri[notriangle].vertex[2];
-		
+		cout << "444" << '\n';
 		createLocalMatrix(a, b, c, localstiff, localmass);
 
 		ugraphs[a].nodes.at(a).stiffval += localstiff[0][0];
