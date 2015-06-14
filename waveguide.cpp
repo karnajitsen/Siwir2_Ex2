@@ -469,10 +469,11 @@ int main(int argc, char** argv)
 	else
 		cout << "eigenmode.txt is not correct with reference file \n\n";
 	
-	free(unodes);
-	free(knodes);
 	free(ugraphs);
 	free(tri);
+	free(unodes);
+	free(knodes);
+	
 	return 0;
 
 }
