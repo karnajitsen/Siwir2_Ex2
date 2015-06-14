@@ -252,7 +252,7 @@ inline void populateFval()
 
 inline void solveGS()
 {
-	Real norm, temp;
+	Real norm = 0.0, temp=0.0;
 	
 	do{
 		for (size_t i = 0; i < novert; i++)
