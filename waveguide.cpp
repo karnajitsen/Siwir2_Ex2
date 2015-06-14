@@ -275,6 +275,12 @@ inline void solveCG()
 	{
 		for (size_t i = 0; i < novert; i++)
 		{
+			//unodes[i].uval /= normu;
+			cout << unodes[i].uval << " ";
+		}
+		cout << '\n';
+		for (size_t i = 0; i < novert; i++)
+		{
 			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 			{
 				id = ugraphs[i].index[k];
@@ -328,8 +334,8 @@ inline void invPower(Real& lambda)
 		cout << normu;
 		for (size_t i = 0; i < novert; i++)
 		{
-			//unodes[i].uval /= normu;
-			cout << unodes[i].uval << " ";
+			unodes[i].uval /= normu;
+			//cout << unodes[i].uval << " ";
 		}
 		cout << '\n';
 		
