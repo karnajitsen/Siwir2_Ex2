@@ -105,49 +105,49 @@ inline void init()
 		cout << "6666666"<< '\n';
 		cout << "2 " << d << " " << e << " " << f << '\n';
 		cout << ugraphs[d].length;
-		ugraphs[d].nodes.emplace(d, unodes[d]);
-		ugraphs[d].nodes.emplace(e, unodes[e]);
-		ugraphs[d].nodes.emplace(f, unodes[f]);
-		cout << "77777" << '\n';
-		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), d) != ugraphs[d].index.end())
-					ugraphs[d].index.emplace_back(d);
-		
-		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), e) != ugraphs[d].index.end())
-					ugraphs[d].index.emplace_back(e);
-		
-		if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), f) != ugraphs[d].index.end())
-					ugraphs[d].index.emplace_back(f);
-		
-		ugraphs[e].nodes.emplace(e, unodes[e]);
-		ugraphs[e].nodes.emplace(d, unodes[d]);
-		ugraphs[e].nodes.emplace(f, unodes[f]);
+		//ugraphs[d].nodes.emplace(d, unodes[d]);
+		//ugraphs[d].nodes.emplace(e, unodes[e]);
+		//ugraphs[d].nodes.emplace(f, unodes[f]);
+		//cout << "77777" << '\n';
+		//if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), d) != ugraphs[d].index.end())
+		//			ugraphs[d].index.emplace_back(d);
+		//
+		//if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), e) != ugraphs[d].index.end())
+		//			ugraphs[d].index.emplace_back(e);
+		//
+		//if (std::find(ugraphs[d].index.begin(), ugraphs[d].index.end(), f) != ugraphs[d].index.end())
+		//			ugraphs[d].index.emplace_back(f);
+		//
+		//ugraphs[e].nodes.emplace(e, unodes[e]);
+		//ugraphs[e].nodes.emplace(d, unodes[d]);
+		//ugraphs[e].nodes.emplace(f, unodes[f]);
 
-		if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), e) != ugraphs[e].index.end())
-			ugraphs[e].index.emplace_back(e);
+		//if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), e) != ugraphs[e].index.end())
+		//	ugraphs[e].index.emplace_back(e);
 
-		if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), d) != ugraphs[e].index.end())
-			ugraphs[e].index.emplace_back(d);		
+		//if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), d) != ugraphs[e].index.end())
+		//	ugraphs[e].index.emplace_back(d);		
 
-		if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), f) != ugraphs[e].index.end())
-			ugraphs[e].index.emplace_back(f);
+		//if (std::find(ugraphs[e].index.begin(), ugraphs[e].index.end(), f) != ugraphs[e].index.end())
+		//	ugraphs[e].index.emplace_back(f);
 
-		ugraphs[f].nodes.emplace(f, unodes[f]);
-		ugraphs[f].nodes.emplace(e, unodes[e]);
-		ugraphs[f].nodes.emplace(d, unodes[d]);
+		//ugraphs[f].nodes.emplace(f, unodes[f]);
+		//ugraphs[f].nodes.emplace(e, unodes[e]);
+		//ugraphs[f].nodes.emplace(d, unodes[d]);
 
-		if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), f) != ugraphs[f].index.end())
-			ugraphs[f].index.emplace_back(f);
+		//if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), f) != ugraphs[f].index.end())
+		//	ugraphs[f].index.emplace_back(f);
 
-		if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), d) != ugraphs[f].index.end())
-			ugraphs[f].index.emplace_back(d);
+		//if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), d) != ugraphs[f].index.end())
+		//	ugraphs[f].index.emplace_back(d);
 
-		if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), e) != ugraphs[f].index.end())
-			ugraphs[f].index.emplace_back(e);	
-		
-		//cout << d << " " << e << " " << f << '\n';
-		tri[i].vertex[0] = d;
-		tri[i].vertex[1] = e;
-		tri[i].vertex[2] = f;
+		//if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), e) != ugraphs[f].index.end())
+		//	ugraphs[f].index.emplace_back(e);	
+		//
+		////cout << d << " " << e << " " << f << '\n';
+		//tri[i].vertex[0] = d;
+		//tri[i].vertex[1] = e;
+		//tri[i].vertex[2] = f;
 		
 	}
 
