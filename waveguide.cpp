@@ -245,7 +245,7 @@ inline void populateFval()
 			//cout << "## 7777 ###" << ugraphs[i].index.size() << '\n';
 			size_t id = ugraphs[i].index[k];
 			//cout << "## 8888 ###" << '\n';
-			unodes[i].fval += ugraphs[i].nodes.at(id).massval * ugraphs[id].nodes.at(id).uval;
+			unodes[i].fval += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
 		}
 	}
 }
