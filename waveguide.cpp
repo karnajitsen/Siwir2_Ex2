@@ -96,6 +96,8 @@ inline void init()
 	tri = (triang*)memalign(ALLIGNMENT, notriangle*sizeof(triang));
 	getline(ucircle, tmp);
 	cout << "***  " << tmp;
+	getline(ucircle, tmp);
+	cout << "***  " << tmp;
 	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
 	{
 		
