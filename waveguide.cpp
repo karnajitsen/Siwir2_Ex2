@@ -297,7 +297,7 @@ inline void solveCG()
 			temp = 0.0;
 		}
 
-		cout << '\n\n';
+		//cout << '\n\n';
 		for (size_t i = 0; i < 10; i++)
 		{
 			//unodes[i].uval /= normu;
@@ -312,7 +312,7 @@ inline void solveCG()
 	
 	alpha = del0 / denom;
 	del1 = 0.0;
-	cout << "alpha = " << alpha;
+	//cout << "alpha = " << alpha;
 	for (size_t i = 0; i < novert; i++)
 	{
 		unodes[i].uval += alpha * dirc[i];	
@@ -325,12 +325,12 @@ inline void solveCG()
 	//	cout << unodes[i].uval << " ";
 	//}
 	
-	cout << "delta = " << del1 << " " << del0;
+	//cout << "delta = " << del1 << " " << del0;
 	
 	if (sqrt(del1) <= eps)
 		return;
 	beta = del1 / del0;
-	cout << "beta = " << beta;
+	//cout << "beta = " << beta;
 	cout << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
