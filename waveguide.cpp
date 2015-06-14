@@ -158,7 +158,7 @@ inline void init()
 		knodes[i].xcord = unodes[i].xcord;
 		knodes[i].ycord = unodes[i].ycord;
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
-		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
+		//std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
 	}
 	//cout << "222" << '\n';
 
@@ -469,10 +469,10 @@ int main(int argc, char** argv)
 	else
 		cout << "eigenmode.txt is not correct with reference file \n\n";
 	
-	free(ugraphs);
+	/*free(ugraphs);
 	free(tri);
 	free(unodes);
-	free(knodes);
+	free(knodes);*/
 	
 	return 0;
 
