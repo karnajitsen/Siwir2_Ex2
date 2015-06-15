@@ -356,7 +356,11 @@ inline void invPower(Real& lambda)
 		}
 
 		lambda = n / d;	
+<<<<<<< HEAD
 		cout << "\nEigenvalue after step: " << k << " = " << lambda;
+=======
+		cout << '\n' << lambda;
+>>>>>>> origin/master
 	} while ((abs(lambda - lambdaold)/lambdaold) > ERRLIMIT);
 }
 
@@ -400,7 +404,6 @@ inline bool compareEigenFiles(string sfile, string tfile)
 int main(int argc, char** argv)
 {
 
-	cout << "In the programm" << '\n';
 	if (argc < 3)
 	{
 		std::cout << "Invalid number of argument";
