@@ -1,0 +1,90 @@
+#include "Polygon.h"
+
+Polygon::Polygon(size_t vert1, size_t vert2, size_t vert3)
+{
+	m_indices.push_back(vert1);
+	m_indices.push_back(vert2);
+	m_indices.push_back(vert3);
+}
+
+
+void Polygon::print()
+{
+	size_t tabwidth = 10;
+	cout << "polygon:";
+	
+	for(size_t index : m_indices)
+	{
+		cout << setw(tabwidth) << index;
+	}
+	
+	cout << endl;
+}
+
+
+void Polygon::print(size_t number)
+{
+	size_t tabwidth = 10;
+	cout << "polygon" << setw(tabwidth/2) << number << ":";
+	
+	for(size_t index : m_indices)
+	{
+		cout << setw(tabwidth) << index;
+	}
+	
+	cout << endl;
+}
+
+
+bool Polygon::containsVertex(size_t index)
+{
+	for(size_t index_iter : m_indices)
+	{
+		if(index_iter == index)
+		{
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+
+vector<size_t> Polygon::getOther(size_t index)
+{
+	vector<size_t> other;
+	
+	for(size_t index_iter : m_indices)
+	{
+		if(index_iter != index)
+		{
+			other.push_back(index_iter);
+		}
+	}
+	
+	return other;
+}
+
+
+vector<size_t> Polygon::getIndices()
+{
+	return m_indices;
+}
+
+
+bool Polygon::replaceVertex(size_t original, size_t replacement)
+{
+	for(vector<size_t>::iterator it = m_polygons.begin(); it != m_polygons.end(); it++)
+	{
+		if((*it) == original)
+		{
+			(*it) = replacement;
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+
+

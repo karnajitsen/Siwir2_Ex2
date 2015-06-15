@@ -1,0 +1,14 @@
+#pragma once
+
+using namespace std;
+
+class Vertex {
+	private:
+		real m_x;
+		real m_y;
+		
+	public:
+		Vertex(real x, real y);
+		real getX();
+		real getY();
+};

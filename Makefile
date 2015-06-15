@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS= -Wall -std=c++11 -pedantic
+CFLAGS= -Wall -std=c++11 -pedantic -g
 #CFLAGS= -fpermissive
 LDFLAGS=
 SOURCES=waveguide.cpp

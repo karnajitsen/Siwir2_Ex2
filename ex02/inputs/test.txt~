@@ -1,0 +1,10 @@
+ 3 vertices in the domain
+ Index of vertex | x coordinate | y coordinate
+              0             1             0
+              1            -1             0
+              2             0             2
+              3             2             2
+ 1 faces in the domain
+ index of vertex 0 | index of vertex 1 | index of vertex 2 
+                0             1             2
+                0             2             3

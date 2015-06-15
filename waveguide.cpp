@@ -7,6 +7,8 @@
 #include <string>
 #include<malloc.h>
 #include<algorithm>
+#include <stdio.h>
+#include <string.h>
 #include<vector>
 #include <map>
 #include "./myColsamm/Source/Colsamm.h"
@@ -37,18 +39,102 @@ struct triang{
 	size_t vertex[3];
 };
 
-Real delta, eps;
+Real delta, eps, reflevel;
 
 graph* __restrict ugraphs = nullptr;
 node* __restrict knodes = nullptr;
 node* __restrict unodes = nullptr;
 //node* __restrict fnodes = nullptr;
-triang * __restrict tri = nullptr;
-size_t novert, notriangle;
+triang * __restrict tri = nullptr , * __restrict otri = nullptr;
+size_t novert, notriangle, tricnt = 0;
 
 inline double kxy2(const Real x, const Real y)
 {
 	return (((100.0 + delta) * exp(-50.0*(x*x + y*y))) - 100.0);
+}
+
+inline size_t serchNode(node nd)
+{
+
+    for(size_t k= 0 ; k < novert; k++)
+    {
+        if(abs(unodes[k].xcord - nd.xcord) < 0.00005 && abs(unodes[k].ycord - nd.ycord) < 0.00005)
+            return k;
+    }
+
+    ++novert;
+    node* newnode = (node *)memalign(ALLIGNMENT, novert * sizeof(node));
+    memcpy(newnode,unodes ,(novert-1)* sizeof(node));
+
+    newnode[novert-1].xcord = nd.xcord;
+    newnode[novert-1].ycord = nd.ycord;
+    newnode[novert-1].fval = 0.0;
+    newnode[novert-1].uval = 1.0;
+    newnode[novert-1].massval = 0.0;
+    newnode[novert-1].stiffval = 0.0;
+    newnode[novert-1].vertno = novert;
+    memcpy(unodes,newnode,(novert) * sizeof(node));
+    return (novert-1);
+}
+
+inline void refinement(triang trin, int rfl)
+{
+        triang tmptri;
+      size_t a,b,c;
+
+        node newVert1 , newVert2, newVert3;
+        size_t vert1 = trin.vertex[0];
+        size_t vert2 = trin.vertex[1];
+        size_t vert3 = trin.vertex[2];
+
+         newVert1.xcord = (unodes[vert1].xcord+ unodes[vert2].xcord)/2.0;
+         newVert1.ycord = (unodes[vert1].ycord+ unodes[vert2].ycord)/2.0;
+         newVert2.xcord = (unodes[vert2].xcord+ unodes[vert3].xcord)/2.0;
+         newVert2.ycord = (unodes[vert2].ycord+ unodes[vert3].ycord)/2.0;
+         newVert3.xcord = (unodes[vert1].xcord+ unodes[vert3].xcord)/2.0;
+         newVert3.ycord = (unodes[vert1].ycord+ unodes[vert3].ycord)/2.0;
+
+         a = serchNode(newVert1);
+         b = serchNode(newVert2);
+         c = serchNode(newVert3);
+
+         tmptri.vertex[0] = a;
+         tmptri.vertex[1] = b;
+         tmptri.vertex[2] = c;
+         if(reflevel > 1)
+             refinement(tmptri,reflevel - 1);
+         else{
+             tri[tricnt++] = tmptri;
+         }
+
+         tmptri.vertex[0] = vert1;
+         tmptri.vertex[1] = a;
+         tmptri.vertex[2] = b;
+         if(reflevel > 1)
+             refinement(tmptri,reflevel - 1);
+         else{
+             tri[tricnt++] = tmptri;
+         }
+
+
+         tmptri.vertex[0] = vert2;
+         tmptri.vertex[1] = a;
+         tmptri.vertex[2] = c;
+         if(reflevel > 1)
+             refinement(tmptri,reflevel - 1);
+         else{
+             tri[tricnt++] = tmptri;
+         }
+
+         tmptri.vertex[0] = vert3;
+         tmptri.vertex[1] = b;
+         tmptri.vertex[2] = c;
+         if(reflevel > 1)
+             refinement(tmptri,reflevel - 1);
+         else{
+             tri[tricnt++] = tmptri;
+         }
+
 }
 
 inline void init()
@@ -65,8 +151,8 @@ inline void init()
 	novert = stoi(tmp.substr(0, tmp.find(" ") - 1));
 	cout << "no of vertex = " << novert << '\n';
 
-	
-	unodes = new node[novert];
+
+    unodes = (node *)memalign(ALLIGNMENT,novert*sizeof(node));
 	getline(ucircle, tmp);
 	//cout << tmp << '\n';
 	for (size_t i = 0; i<novert; i++)
@@ -96,14 +182,35 @@ inline void init()
 	getline(ucircle, tmp);
 	
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
+    otri = new triang[notriangle];
+    notriangle = pow(2,2*reflevel) * notriangle;
 	//ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph));
 	ugraphs = new graph[novert];
 	tri = new triang[notriangle];
 	cout << "no of triangle = " << notriangle << '\n';
 	getline(ucircle, tmp);
-	
-	for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
+
+    for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
+    {
+        otri[i].vertex[0] = d;
+        otri[i].vertex[1] = e;
+        otri[i].vertex[2] = f;
+    }
+
+    if(reflevel > 0)
+    {
+     for(size_t i = 0;i<notriangle; i++)
+      refinement(otri[i],reflevel);
+    }
+    else
+        tri = otri;
+
+    for (size_t i = 0;i<notriangle; i++)
 	{
+        d = tri[i].vertex[0];
+        e = tri[i].vertex[1];
+        f = tri[i].vertex[2];
+
 		ugraphs[d].nodes.emplace(d, unodes[d]);
 		ugraphs[d].nodes.emplace(e, unodes[e]);
 		ugraphs[d].nodes.emplace(f, unodes[f]);
@@ -144,9 +251,7 @@ inline void init()
 			ugraphs[f].index.emplace_back(e);	
 		
 		//cout << d << " " << e << " " << f << '\n';
-		tri[i].vertex[0] = d;
-		tri[i].vertex[1] = e;
-		tri[i].vertex[2] = f;
+
 		
 	}
 
@@ -410,6 +515,7 @@ int main(int argc, char** argv)
 
 	delta = atof(argv[1]);
 	eps = atof(argv[2]);
+    reflevel = atoi(argv[3]);
     	
 	init();
 	createGlobalMatrix();

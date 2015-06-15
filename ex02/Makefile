@@ -1,0 +1,15 @@
+TARGET = waveguide
+CC     = g++
+FLAGS  = -g -O3 -Wall -Winline -Wshadow -std=c++11 -pedantic
+#FLAGS  = -O3 -Wall -Winline -Wshadow -std=c++11 -pedantic
+
+default: clean fem
+
+fem: main.cpp
+	$(CC) $(FLAGS) main.cpp Vertex.cpp Polygon.cpp Mesh.cpp -o $(TARGET)
+	
+clean:
+	rm $(TARGET)
+	
+plot:
+	gnuplot ./plot.p
