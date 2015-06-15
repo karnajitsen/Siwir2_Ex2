@@ -61,21 +61,9 @@ inline size_t searchNode(node nd)
     }
 
     ++novert;
-  /*  node* newnode = (node *)memalign(ALLIGNMENT, novert * sizeof(node));
-    memcpy(newnode,unodes ,(novert-1)* sizeof(node));
-
-    newnode[novert-1].xcord = nd.xcord;
-    newnode[novert-1].ycord = nd.ycord;
-    newnode[novert-1].fval = 0.0;
-    newnode[novert-1].uval = 1.0;
-    newnode[novert-1].massval = 0.0;
-    newnode[novert-1].stiffval = 0.0;
-    newnode[novert-1].vertno = novert;
-    free(unodes);
-    unodes = newnode;*/
+  
     unodes = (node *)realloc( unodes, novert * sizeof(node));
-  //  memcpy(newnode,unodes ,(novert-1)* sizeof(node));
-
+  
     unodes[novert-1].xcord = nd.xcord;
     unodes[novert-1].ycord = nd.ycord;
     unodes[novert-1].fval = 0.0;
@@ -83,9 +71,7 @@ inline size_t searchNode(node nd)
     unodes[novert-1].massval = 0.0;
     unodes[novert-1].stiffval = 0.0;
     unodes[novert-1].vertno = novert;
-    //free(unodes);
-    //unodes = newnode;
-
+   
     return (novert-1);
 }
 
