@@ -10,7 +10,7 @@
 #include<vector>
 #include <map>
 #include "./myColsamm/Source/Colsamm.h"
-
+#include <iomanip>
 #define ERRLIMIT 0.000000001
 
 typedef double Real;
@@ -356,9 +356,8 @@ inline void invPower(Real& lambda)
 		}
 
 		lambda = n / d;	
-		cout << "\nEigenvalue after step: " << k << " = " << lambda;
-		cout << '\n' << lambda;
-
+		cout << setprecision(10) << "\nEigenvalue after step: " << k << " = " << lambda;
+		
 	} while ((abs(lambda - lambdaold)/lambdaold) > ERRLIMIT);
 }
 
