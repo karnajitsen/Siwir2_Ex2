@@ -356,11 +356,9 @@ inline void invPower(Real& lambda)
 		}
 
 		lambda = n / d;	
-<<<<<<< HEAD
 		cout << "\nEigenvalue after step: " << k << " = " << lambda;
-=======
 		cout << '\n' << lambda;
->>>>>>> origin/master
+
 	} while ((abs(lambda - lambdaold)/lambdaold) > ERRLIMIT);
 }
 
