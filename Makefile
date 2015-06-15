@@ -14,7 +14,7 @@ waveguide:
 
 test: clean
 	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
-	./waveguide 0.01 0.01
+	./waveguide 0.01 0.0000000001
 
 clean:
 	

@@ -477,10 +477,7 @@ inline bool compareEigenFiles(string sfile, string tfile)
 
 	while (srcfile >> a && srcfile >> b && srcfile >> c && tgtfile >> g && tgtfile >> e && tgtfile >> f)
 	{
-		c = round(c * 10000);
-		f = round(f * 10000);
-		cout << c << " " << f << '\n';
-		if (a!=g || b != e || c!=f)
+		if (abs(a-g) > 0.00005 || abs(b- e) > 0.00005  || abs(c-f)>0.00005)
 			flag = false;
 	}
 
@@ -548,7 +545,7 @@ int main(int argc, char** argv)
 	{
 		fOut4 << unodes[i].xcord << " " << unodes[i].ycord << " " << unodes[i].uval << std::endl;
 	}
-	fOut4 << std::endl;
+//	fOut4 << std::endl;
 
 	fOut4.close();
 	
