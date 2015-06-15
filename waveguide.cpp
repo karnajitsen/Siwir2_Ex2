@@ -44,7 +44,6 @@ Real delta, eps, reflevel;
 graph* __restrict ugraphs = nullptr;
 node* __restrict knodes = nullptr;
 node* __restrict unodes = nullptr;
-//node* __restrict fnodes = nullptr;
 triang * __restrict tri = nullptr , * __restrict otri = nullptr;
 size_t novert, notriangle, tricnt = 0;
 
@@ -53,12 +52,12 @@ inline double kxy2(const Real x, const Real y)
 	return (((100.0 + delta) * exp(-50.0*(x*x + y*y))) - 100.0);
 }
 
-inline size_t serchNode(node nd)
+inline size_t searchNode(node nd)
 {
 
     for(size_t k= 0 ; k < novert; k++)
     {
-        if(abs(unodes[k].xcord - nd.xcord) < 0.00005 && abs(unodes[k].ycord - nd.ycord) < 0.00005)
+        if(abs(unodes[k].xcord - nd.xcord) < 0.000005 && abs(unodes[k].ycord - nd.ycord) < 0.000005)
             return k;
     }
 
@@ -73,13 +72,14 @@ inline size_t serchNode(node nd)
     newnode[novert-1].massval = 0.0;
     newnode[novert-1].stiffval = 0.0;
     newnode[novert-1].vertno = novert;
-    memcpy(unodes,newnode,(novert) * sizeof(node));
+	free(unodes);
+	unodes = newnode;
     return (novert-1);
 }
 
-inline void refinement(triang trin, int rfl)
+inline void refinement(triang trin, size_t rfl)
 {
-        triang tmptri;
+      triang tmptri;
       size_t a,b,c;
 
         node newVert1 , newVert2, newVert3;
@@ -87,21 +87,22 @@ inline void refinement(triang trin, int rfl)
         size_t vert2 = trin.vertex[1];
         size_t vert3 = trin.vertex[2];
 
-         newVert1.xcord = (unodes[vert1].xcord+ unodes[vert2].xcord)/2.0;
-         newVert1.ycord = (unodes[vert1].ycord+ unodes[vert2].ycord)/2.0;
-         newVert2.xcord = (unodes[vert2].xcord+ unodes[vert3].xcord)/2.0;
-         newVert2.ycord = (unodes[vert2].ycord+ unodes[vert3].ycord)/2.0;
-         newVert3.xcord = (unodes[vert1].xcord+ unodes[vert3].xcord)/2.0;
-         newVert3.ycord = (unodes[vert1].ycord+ unodes[vert3].ycord)/2.0;
+         newVert1.xcord = (unodes[vert1].xcord + unodes[vert2].xcord) * 0.5;
+		 newVert1.ycord = (unodes[vert1].ycord + unodes[vert2].ycord) * 0.5;
+		 newVert2.xcord = (unodes[vert2].xcord + unodes[vert3].xcord) * 0.5;
+		 newVert2.ycord = (unodes[vert2].ycord + unodes[vert3].ycord) * 0.5;
+		 newVert3.xcord = (unodes[vert1].xcord + unodes[vert3].xcord) * 0.5;
+		 newVert3.ycord = (unodes[vert1].ycord + unodes[vert3].ycord) * 0.5;
 
-         a = serchNode(newVert1);
-         b = serchNode(newVert2);
-         c = serchNode(newVert3);
+         a = searchNode(newVert1);
+         b = searchNode(newVert2);
+         c = searchNode(newVert3);
 
          tmptri.vertex[0] = a;
          tmptri.vertex[1] = b;
          tmptri.vertex[2] = c;
-         if(reflevel > 1)
+         
+		 if(reflevel > 1)
              refinement(tmptri,reflevel - 1);
          else{
              tri[tricnt++] = tmptri;
@@ -116,8 +117,7 @@ inline void refinement(triang trin, int rfl)
              tri[tricnt++] = tmptri;
          }
 
-
-         tmptri.vertex[0] = vert2;
+		 tmptri.vertex[0] = vert2;
          tmptri.vertex[1] = a;
          tmptri.vertex[2] = c;
          if(reflevel > 1)
@@ -134,7 +134,6 @@ inline void refinement(triang trin, int rfl)
          else{
              tri[tricnt++] = tmptri;
          }
-
 }
 
 inline void init()
@@ -184,7 +183,6 @@ inline void init()
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
     otri = new triang[notriangle];
     notriangle = pow(2,2*reflevel) * notriangle;
-	//ugraphs = (graph*)memalign(ALLIGNMENT, novert*sizeof(graph));
 	ugraphs = new graph[novert];
 	tri = new triang[notriangle];
 	cout << "no of triangle = " << notriangle << '\n';
@@ -204,6 +202,7 @@ inline void init()
     }
     else
         tri = otri;
+	delete otri;
 
     for (size_t i = 0;i<notriangle; i++)
 	{
@@ -250,9 +249,7 @@ inline void init()
 		if (std::find(ugraphs[f].index.begin(), ugraphs[f].index.end(), e) == ugraphs[f].index.end())
 			ugraphs[f].index.emplace_back(e);	
 		
-		//cout << d << " " << e << " " << f << '\n';
-
-		
+		//cout << d << " " << e << " " << f << '\n';		
 	}
 
 	knodes = new node[novert];
@@ -262,8 +259,7 @@ inline void init()
 		knodes[i].ycord = unodes[i].ycord;
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
 		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
-
-		}
+	}
 }
 
 inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vector<double>>& localstiff, std::vector<std::vector<double>>& localmass)
