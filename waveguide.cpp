@@ -158,33 +158,21 @@ inline void init()
 		knodes[i].uval = kxy2(unodes[i].xcord, unodes[i].ycord);
 		std::sort(ugraphs[i].index.begin(), ugraphs[i].index.end());
 
-		/*for (int j = 0; j < ugraphs[i].index.size(); j++)
-		{
-			cout << " " << ugraphs[i].index[j];
 		}
-		cout << '\n';*/
-	}
-	//cout << "222" << '\n';
-
 }
 
 inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vector<double>>& localstiff, std::vector<std::vector<double>>& localmass)
 {
 	ELEMENTS::Triangle my_element;
 
-	//std::vector< std::vector< double > > loc_stiff, loc_mass;
-	std::vector<double> corners(6, 0.0);
-	//cout << "1 " << " " << b << " " << c << '\n';
-	corners[0] = ugraphs[a].nodes.at(a).xcord; 
+		std::vector<double> corners(6, 0.0);
+		corners[0] = ugraphs[a].nodes.at(a).xcord; 
 	corners[1] = ugraphs[a].nodes.at(a).ycord;
-	//cout << "2 " << a << " " << b << " " << c << '\n';
-	corners[2] = ugraphs[b].nodes.at(b).xcord;
+		corners[2] = ugraphs[b].nodes.at(b).xcord;
 	corners[3] = ugraphs[b].nodes.at(b).ycord;
-	//cout << "3 " <<  a << " " << b << " " << c << '\n';
 	corners[4] = ugraphs[c].nodes.at(c).xcord;
 	corners[5] = ugraphs[c].nodes.at(c).ycord;
-	// pass the corners to the finite element
-	//cout << a << " " << b << " " << c << '\n';
+
 	my_element(corners);
 
 	localstiff =
@@ -205,21 +193,21 @@ inline void createGlobalMatrix()
 		a = tri[i].vertex[0];
 		b = tri[i].vertex[1];
 		c = tri[i].vertex[2];
-		//cout << "1 " << " " << b << " " << c << '\n';
+		
 		createLocalMatrix(a, b, c, localstiff, localmass);
-		//cout << "555" << '\n';
+		
 		ugraphs[a].nodes.at(a).stiffval += localstiff[0][0];
 		ugraphs[a].nodes.at(b).stiffval += localstiff[0][1];
 		ugraphs[a].nodes.at(c).stiffval += localstiff[0][2];
-		//cout << "666" << '\n';
+		
 		ugraphs[b].nodes.at(a).stiffval += localstiff[1][0];
 		ugraphs[b].nodes.at(b).stiffval += localstiff[1][1];
 		ugraphs[b].nodes.at(c).stiffval += localstiff[1][2];
-		//cout << "777" << '\n';
+		
 		ugraphs[c].nodes.at(a).stiffval += localstiff[2][0];
 		ugraphs[c].nodes.at(b).stiffval += localstiff[2][1];
 		ugraphs[c].nodes.at(c).stiffval += localstiff[2][2];
-		//cout << "88" << '\n';
+		
 		ugraphs[a].nodes.at(a).massval += localmass[0][0];
 		ugraphs[a].nodes.at(b).massval += localmass[0][1];
 		ugraphs[a].nodes.at(c).massval += localmass[0][2];
@@ -241,50 +229,12 @@ inline void populateFval()
 	{
 		for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
 		{
-			//cout << "## 7777 ###" << ugraphs[i].index.size() << '\n';
-			size_t id = ugraphs[i].index[k];
-			//cout << "## 8888 ###" << '\n';
-			temp += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
+				size_t id = ugraphs[i].index[k];
+				temp += ugraphs[i].nodes.at(id).massval * unodes[id].uval;
 		}
 		unodes[i].fval = temp;
 		temp = 0.0;
 	}
-}
-
-inline void solveGS()
-{
-	Real r = 0.0,norm = 0.0, temp=0.0;
-	vector<double> preu;
-	for (size_t i = 0; i < novert; i++)
-	{
-		preu.emplace_back(0.0);
-	}
-	
-	do{
-		for (size_t i = 0; i < novert; i++)
-		{
-			for (size_t k = 0; k < ugraphs[i].nodes.size(); k++)
-			{
-				
-				size_t id = ugraphs[i].index[k];
-				if (i == id) continue;
-				temp += ugraphs[i].nodes.at(id).stiffval * unodes[id].uval;
-
-			}
-			preu[i] = unodes[i].uval;
-			unodes[i].uval = (unodes[i].fval - temp) / ugraphs[i].nodes.at(i).stiffval;
-			temp = 0.0;
-		}
-		norm = 0.0;
-		r = 0.0;
-		for (size_t i = 0; i < novert; i++)
-		{
-			r = unodes[i].uval-preu[i];
-			norm += r*r;
-		}
-		norm = sqrt(norm/novert);
-		cout << norm << '\n';
-	} while (norm > eps);
 }
 
 inline void solveCG()
@@ -306,18 +256,7 @@ inline void solveCG()
 		temp = 0.0;
 	}
 
-	//for (size_t i = 0; i < novert; i++)
-	//{
-	//	//unodes[i].uval /= normu;
-	//	cout << unodes[i].fval << " ";
-	//}
 
-	//for (size_t i = 0; i < 10; i++)
-	//{
-	//	//unodes[i].uval /= normu;
-	//	cout << dirc[i] << " ";
-	//}
-	
 	for (size_t i = 0; i < res.size(); i++)
 		del0 += res[i] * res[i];
 	//dirc = res;
@@ -335,36 +274,14 @@ inline void solveCG()
 			temp = 0.0;
 		}
 
-		//cout << "\n res = ";
-		//for (size_t i = 0; i < 10; i++)
-		//{
-		//	//unodes[i].uval /= normu;
-		//	cout << res[i] << " ";
-		//}
-		//cout << '\n';
-
-		//cout << "\n zzzz  = ";
-		//for (size_t i = 0; i < 10; i++)
-		//{
-		//	//unodes[i].uval /= normu;
-		//	cout << z[i] << " ";
-		//}
-		//cout << "\n dirc = ";
-		//for (size_t i = 0; i < 10; i++)
-		//{
-		//	//unodes[i].uval /= normu;
-		//	cout << dirc[i] << " ";
-		//}
-
+		
 		denom = 0.0;
 	for (size_t i = 0; i < dirc.size(); i++)
 			denom += dirc[i] * z[i];
 
-	//cout << "denom = " << denom;
-	
 	alpha = del0 / denom;
 	del1 = 0.0;
-	//cout << "  alpha = " << alpha;
+	
 	for (size_t i = 0; i < novert; i++)
 	{
 		unodes[i].uval += alpha * dirc[i];	
@@ -372,13 +289,9 @@ inline void solveCG()
 		del1 += res[i] * res[i];
 	}
 	
-	//cout << "delta = " << del1 << " " << del0;
-	
 	if (sqrt(del1) <= eps)
 		return;
 	beta = del1 / del0;
-	//cout << "beta = " << beta;
-	//cout << '\n';
 	for (size_t i = 0; i < novert; i++)
 	{
 		dirc[i] = res[i] + beta * dirc[i];
@@ -393,13 +306,14 @@ inline void invPower(Real& lambda)
 	Real lambdaold = 0.0, normu = 0.0;
 	vector<Real> num, denom;
 	Real t1 = 0.0, t2 = 0.0;
-	size_t id = 0;
+	size_t id = 0 ,k = 0;
 	for (size_t i = 0; i < novert; i++)
 	{
 		num.emplace_back(0.0);
 		denom.emplace_back(0.0);
 	}
-	do{		
+	do{	
+		k++;
 		lambdaold = lambda;
 		populateFval();
 		solveCG();
@@ -418,8 +332,7 @@ inline void invPower(Real& lambda)
 			unodes[i].uval = unodes[i].uval / normu;
 			//cout << unodes[i].uval << " ";
 		} 
-		//cout << '\n';
-		
+	
 
 		for (size_t i = 0; i < novert; i++)
 		{
@@ -443,7 +356,7 @@ inline void invPower(Real& lambda)
 		}
 
 		lambda = n / d;	
-		cout << " " << lambda << " ";
+		cout << "\nEigenvalue after step: " << k << " = " << lambda;
 	} while ((abs(lambda - lambdaold)/lambdaold) > ERRLIMIT);
 }
 
@@ -502,7 +415,7 @@ int main(int argc, char** argv)
 	createGlobalMatrix();
 	invPower(lambda);
 	
-	cout << "\n Eigenvalue = " << lambda;
+	cout << "\n Smallest Eigenvalue = " << lambda;
 
 	cout << "\n Writing solution to files... \n\n";
 
@@ -545,7 +458,7 @@ int main(int argc, char** argv)
 	{
 		fOut4 << unodes[i].xcord << " " << unodes[i].ycord << " " << unodes[i].uval << std::endl;
 	}
-//	fOut4 << std::endl;
+	fOut4 << std::endl;
 
 	fOut4.close();
 	
