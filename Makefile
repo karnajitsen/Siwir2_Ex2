@@ -13,7 +13,7 @@ wave:
 	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
 	./waveguide 0.01 0.0000000001 0
 ref:
-	./waveguide 0.01 0.0000000000001 2
+	./waveguide 0.01 0.0000000001 1
 
 test: 
 	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
