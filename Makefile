@@ -11,9 +11,12 @@ all: wave
 
 wave:
 	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
-	./waveguide 0.01 0.0000000001 0
-ref:
+	
+ref1:
 	./waveguide 0.01 0.0000000001 1
+
+ref0:
+	./waveguide 0.01 0.0000000001 0
 
 test: 
 	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
