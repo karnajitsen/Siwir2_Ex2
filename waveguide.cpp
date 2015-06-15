@@ -25,8 +25,7 @@ using namespace ::_COLSAMM_;
 struct node{
 	Real xcord, ycord, stiffval, massval, uval, fval;
 	size_t vertno;
-	bool boundary;
-};
+	};
 
 struct graph{
 	 
@@ -45,7 +44,7 @@ graph* __restrict ugraphs = nullptr;
 node* __restrict knodes = nullptr;
 node* __restrict unodes = nullptr;
 triang * __restrict tri = nullptr , * __restrict otri = nullptr;
-size_t novert, notriangle, tricnt = 0;
+size_t novert, notriangle, tricnt = 0,b4ref;
 
 inline double kxy2(const Real x, const Real y)
 {
@@ -55,7 +54,7 @@ inline double kxy2(const Real x, const Real y)
 inline size_t searchNode(node nd)
 {
 
-    for(size_t k= 0 ; k < novert; k++)
+    for(size_t k = b4ref ; k < novert; k++)
     {
         if(abs(unodes[k].xcord - nd.xcord) < 0.000005 && abs(unodes[k].ycord - nd.ycord) < 0.000005)
             return k;
@@ -72,8 +71,8 @@ inline size_t searchNode(node nd)
     newnode[novert-1].massval = 0.0;
     newnode[novert-1].stiffval = 0.0;
     newnode[novert-1].vertno = novert;
-	free(unodes);
-	unodes = newnode;
+    free(unodes);
+    unodes = newnode;
     return (novert-1);
 }
 
@@ -88,11 +87,11 @@ inline void refinement(triang trin, size_t rfl)
         size_t vert3 = trin.vertex[2];
 
          newVert1.xcord = (unodes[vert1].xcord + unodes[vert2].xcord) * 0.5;
-		 newVert1.ycord = (unodes[vert1].ycord + unodes[vert2].ycord) * 0.5;
-		 newVert2.xcord = (unodes[vert2].xcord + unodes[vert3].xcord) * 0.5;
-		 newVert2.ycord = (unodes[vert2].ycord + unodes[vert3].ycord) * 0.5;
-		 newVert3.xcord = (unodes[vert1].xcord + unodes[vert3].xcord) * 0.5;
-		 newVert3.ycord = (unodes[vert1].ycord + unodes[vert3].ycord) * 0.5;
+	 newVert1.ycord = (unodes[vert1].ycord + unodes[vert2].ycord) * 0.5;
+	 newVert2.xcord = (unodes[vert2].xcord + unodes[vert3].xcord) * 0.5;
+	 newVert2.ycord = (unodes[vert2].ycord + unodes[vert3].ycord) * 0.5;
+	 newVert3.xcord = (unodes[vert1].xcord + unodes[vert3].xcord) * 0.5;
+	 newVert3.ycord = (unodes[vert1].ycord + unodes[vert3].ycord) * 0.5;
 
          a = searchNode(newVert1);
          b = searchNode(newVert2);
@@ -102,8 +101,8 @@ inline void refinement(triang trin, size_t rfl)
          tmptri.vertex[1] = b;
          tmptri.vertex[2] = c;
          
-		 if(reflevel > 1)
-             refinement(tmptri,reflevel - 1);
+	 if(rfl > 1)
+             refinement(tmptri,rfl - 1);
          else{
              tri[tricnt++] = tmptri;
          }
@@ -111,17 +110,17 @@ inline void refinement(triang trin, size_t rfl)
          tmptri.vertex[0] = vert1;
          tmptri.vertex[1] = a;
          tmptri.vertex[2] = b;
-         if(reflevel > 1)
-             refinement(tmptri,reflevel - 1);
+         if(rfl > 1)
+             refinement(tmptri,rfl - 1);
          else{
              tri[tricnt++] = tmptri;
          }
 
-		 tmptri.vertex[0] = vert2;
+	 tmptri.vertex[0] = vert2;
          tmptri.vertex[1] = a;
          tmptri.vertex[2] = c;
-         if(reflevel > 1)
-             refinement(tmptri,reflevel - 1);
+         if(rfl > 1)
+             refinement(tmptri,rfl - 1);
          else{
              tri[tricnt++] = tmptri;
          }
@@ -129,8 +128,8 @@ inline void refinement(triang trin, size_t rfl)
          tmptri.vertex[0] = vert3;
          tmptri.vertex[1] = b;
          tmptri.vertex[2] = c;
-         if(reflevel > 1)
-             refinement(tmptri,reflevel - 1);
+         if(rfl > 1)
+             refinement(tmptri,rfl - 1);
          else{
              tri[tricnt++] = tmptri;
          }
@@ -148,10 +147,8 @@ inline void init()
 	getline(ucircle, tmp);
 
 	novert = stoi(tmp.substr(0, tmp.find(" ") - 1));
-	cout << "no of vertex = " << novert << '\n';
-
-
-    unodes = (node *)memalign(ALLIGNMENT,novert*sizeof(node));
+  	b4ref = novert;
+        unodes = (node *)memalign(ALLIGNMENT,novert*sizeof(node));
 	getline(ucircle, tmp);
 	//cout << tmp << '\n';
 	for (size_t i = 0; i<novert; i++)
@@ -168,12 +165,6 @@ inline void init()
 		unodes[i].stiffval = 0.0;
 		unodes[i].vertno = i;
 		//cout << "2 " << a << " " << unodes[i].xcord << " " << unodes[i].ycord << '\n';
-		if ((b*b + c*c) >= 1.0)  // Check for precision error ???
-			unodes[i].boundary = true;
-		else
-			unodes[i].boundary = false;
-		
-		//cout << i << " " << nodes[i].xcord << " " << nodes[i].ycord << '\n';
 	}
 
 	getline(ucircle, tmp);	
@@ -182,10 +173,10 @@ inline void init()
 	
 	notriangle = stoi(tmp.substr(0, tmp.find(" ") - 1));;
     otri = new triang[notriangle];
+   size_t ntr = notriangle;
     notriangle = pow(2,2*reflevel) * notriangle;
-	ugraphs = new graph[novert];
+	//ugraphs = new graph[novert];
 	tri = new triang[notriangle];
-	cout << "no of triangle = " << notriangle << '\n';
 	getline(ucircle, tmp);
 
     for (size_t i = 0; ucircle >> d && ucircle >> e && ucircle >> f; i++)
@@ -197,13 +188,15 @@ inline void init()
 
     if(reflevel > 0)
     {
-     for(size_t i = 0;i<notriangle; i++)
+     for(size_t i = 0;i<ntr; i++)
       refinement(otri[i],reflevel);
+	delete otri;
     }
     else
         tri = otri;
-	delete otri;
-
+    cout << "no of vertex = " << novert << '\n';
+    cout << "no of triangle = " << notriangle << '\n';
+    ugraphs = new graph[novert];
     for (size_t i = 0;i<notriangle; i++)
 	{
         d = tri[i].vertex[0];
@@ -267,9 +260,9 @@ inline void createLocalMatrix(size_t a, size_t b, size_t c, std::vector<std::vec
 	ELEMENTS::Triangle my_element;
 
 		std::vector<double> corners(6, 0.0);
-		corners[0] = ugraphs[a].nodes.at(a).xcord; 
+	corners[0] = ugraphs[a].nodes.at(a).xcord; 
 	corners[1] = ugraphs[a].nodes.at(a).ycord;
-		corners[2] = ugraphs[b].nodes.at(b).xcord;
+	corners[2] = ugraphs[b].nodes.at(b).xcord;
 	corners[3] = ugraphs[b].nodes.at(b).ycord;
 	corners[4] = ugraphs[c].nodes.at(c).xcord;
 	corners[5] = ugraphs[c].nodes.at(c).ycord;
@@ -502,7 +495,7 @@ inline bool compareEigenFiles(string sfile, string tfile)
 int main(int argc, char** argv)
 {
 
-	if (argc < 3)
+	if (argc < 4)
 	{
 		std::cout << "Invalid number of argument";
 		exit(0);
