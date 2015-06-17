@@ -17,7 +17,8 @@ ref1:
 
 ref0:
 	./waveguide 0.01 0.0000000001 0
-
+	rm -rf *.pdf
+	gnuplot ./plot.p
 test: 
 	$(CC) $(CFLAGS) $(SOURCES) -o waveguide
 	./waveguide 0.01 0.0000000001
